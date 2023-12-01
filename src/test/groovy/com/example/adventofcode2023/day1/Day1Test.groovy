@@ -41,7 +41,7 @@ class Day1Test extends Specification {
     def "firstAndLastDigit"() {
         when:
         final number = Day1.firstAndLastDigit(
-                Day1.filtersNumbers(input)
+                Day1.filterNumbers(input)
         )
 
         then:

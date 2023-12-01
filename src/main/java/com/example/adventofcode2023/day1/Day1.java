@@ -34,7 +34,7 @@ public class Day1 {
 
     static int sumAllFirstAndLastNumbers(final Collection<String> input) {
         return input.stream()
-                .map(Day1::filtersNumbers)
+                .map(Day1::filterNumbers)
                 .mapToInt(Day1::firstAndLastDigit)
                 .sum();
     }
@@ -64,7 +64,7 @@ public class Day1 {
                 .toArray();
     }
 
-    static int[] filtersNumbers(final String s) {
+    static int[] filterNumbers(final String s) {
         return new int[]{
                 IntStream.range(0, s.length())
                         .boxed()
