@@ -27,14 +27,14 @@ public class Day1 {
 
     static int sumAllFirstAndLastDigits(final Collection<String> input) {
         return input.stream()
-                .map(Day1::toDigits)
+                .map(Day1::filterDigits)
                 .mapToInt(Day1::firstAndLastDigit)
                 .sum();
     }
 
     static int sumAllFirstAndLastNumbers(final Collection<String> input) {
         return input.stream()
-                .map(Day1::toDigits2)
+                .map(Day1::filtersNumbers)
                 .mapToInt(Day1::firstAndLastDigit)
                 .sum();
     }
@@ -57,14 +57,14 @@ public class Day1 {
                 .map(Pair::getRight);
     }
 
-    static int[] toDigits(final String s) {
+    static int[] filterDigits(final String s) {
         return s.chars()
                 .filter(Character::isDigit)
                 .map(Character::getNumericValue)
                 .toArray();
     }
 
-    static int[] toDigits2(final String s) {
+    static int[] filtersNumbers(final String s) {
         return new int[]{
                 IntStream.range(0, s.length())
                         .boxed()
