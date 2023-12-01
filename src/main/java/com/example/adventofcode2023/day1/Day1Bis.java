@@ -11,8 +11,8 @@ public class Day1Bis {
     private static final String NUMBER = "\\d|one|two|three|four|five|six|seven|eight|nine";
     public static final String ONE_NUMBER = "[^" + NUMBER + "]*(" + NUMBER + ").*";
     public static final String TWO_NUMBERS = ONE_NUMBER + "(" + NUMBER + ")[^" + NUMBER + "]*";
-    private static final Pattern TWO_NUMBERS_PATTERN = Pattern.compile(TWO_NUMBERS);
     private static final Pattern ONE_NUMBER_PATTERN = Pattern.compile(ONE_NUMBER);
+    private static final Pattern TWO_NUMBERS_PATTERN = Pattern.compile(TWO_NUMBERS);
 
     static int sumAllFirstAndLastNumbers(final Collection<String> input) {
         return input.stream()
