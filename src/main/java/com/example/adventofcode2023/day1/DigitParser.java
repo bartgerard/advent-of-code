@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 import static java.util.Comparator.comparingInt;
 import static java.util.Comparator.reverseOrder;
 
-public class Day1 {
+public class DigitParser {
 
     private static final Map<String, Integer> NUMBER_MAP = Map.ofEntries(
             Map.entry("one", 1),
@@ -27,15 +27,15 @@ public class Day1 {
 
     static int sumAllFirstAndLastDigits(final Collection<String> input) {
         return input.stream()
-                .map(Day1::filterDigits)
-                .mapToInt(Day1::firstAndLastDigit)
+                .map(DigitParser::filterDigits)
+                .mapToInt(DigitParser::firstAndLastDigit)
                 .sum();
     }
 
     static int sumAllFirstAndLastNumbers(final Collection<String> input) {
         return input.stream()
-                .map(Day1::filterNumbers)
-                .mapToInt(Day1::firstAndLastDigit)
+                .map(DigitParser::filterNumbers)
+                .mapToInt(DigitParser::firstAndLastDigit)
                 .sum();
     }
 

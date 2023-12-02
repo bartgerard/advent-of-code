@@ -6,7 +6,7 @@ import java.util.OptionalInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Day1Bis {
+public class NumberParser {
 
     private static final String NUMBER = "\\d|one|two|three|four|five|six|seven|eight|nine";
     public static final String ONE_NUMBER = "[^" + NUMBER + "]*(" + NUMBER + ").*";
@@ -16,7 +16,7 @@ public class Day1Bis {
 
     static int sumAllFirstAndLastNumbers(final Collection<String> input) {
         return input.stream()
-                .map(Day1Bis::firstAndLastNumber)
+                .map(NumberParser::firstAndLastNumber)
                 .flatMapToInt(OptionalInt::stream)
                 .sum();
     }

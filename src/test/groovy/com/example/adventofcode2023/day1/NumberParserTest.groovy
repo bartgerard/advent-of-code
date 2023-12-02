@@ -3,30 +3,14 @@ package com.example.adventofcode2023.day1
 import com.example.adventofcode2023.FileUtils
 import spock.lang.Specification
 
-class Day1Test extends Specification {
+class NumberParserTest extends Specification {
 
-    def "sumAllFirstAndLastDigits"() {
+    def "sum all first and last numbers"() {
         given:
         final List<String> inputLines = FileUtils.read(input)
 
         when:
-        final int sum = Day1.sumAllFirstAndLastDigits(inputLines)
-
-        then:
-        sum == expectedResult
-
-        where:
-        input        | expectedResult | comment
-        "day1/a.txt" | 142            | ""
-        "day1/b.txt" | 55108          | ""
-    }
-
-    def "sumAllFirstAndLastNumbers"() {
-        given:
-        final List<String> inputLines = FileUtils.read(input)
-
-        when:
-        final int sum = Day1.sumAllFirstAndLastNumbers(inputLines)
+        final int sum = NumberParser.sumAllFirstAndLastNumbers(inputLines)
 
         then:
         sum == expectedResult
@@ -38,11 +22,9 @@ class Day1Test extends Specification {
         "day1/c.txt" | 281            | ""
     }
 
-    def "firstAndLastDigit"() {
+    def "first and last digit"() {
         when:
-        final number = Day1.firstAndLastDigit(
-                Day1.filterNumbers(input)
-        )
+        final int number = NumberParser.firstAndLastNumber(input).orElseThrow()
 
         then:
         number == expectedResult
