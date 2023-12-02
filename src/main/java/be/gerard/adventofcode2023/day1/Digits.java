@@ -1,4 +1,4 @@
-package com.example.adventofcode2023.day1;
+package be.gerard.adventofcode2023.day1;
 
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 import static java.util.Comparator.comparingInt;
 import static java.util.Comparator.reverseOrder;
 
-public class DigitParser {
+public final class Digits {
 
     private static final Map<String, Integer> NUMBER_MAP = Map.ofEntries(
             Map.entry("one", 1),
@@ -25,17 +25,21 @@ public class DigitParser {
             Map.entry("nine", 9)
     );
 
+    private Digits() {
+        // no-op
+    }
+
     static int sumAllFirstAndLastDigits(final Collection<String> input) {
         return input.stream()
-                .map(DigitParser::filterDigits)
-                .mapToInt(DigitParser::firstAndLastDigit)
+                .map(Digits::filterDigits)
+                .mapToInt(Digits::firstAndLastDigit)
                 .sum();
     }
 
     static int sumAllFirstAndLastNumbers(final Collection<String> input) {
         return input.stream()
-                .map(DigitParser::filterNumbers)
-                .mapToInt(DigitParser::firstAndLastDigit)
+                .map(Digits::filterNumbers)
+                .mapToInt(Digits::firstAndLastDigit)
                 .sum();
     }
 

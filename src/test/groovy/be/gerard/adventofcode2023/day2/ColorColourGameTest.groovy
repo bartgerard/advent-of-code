@@ -1,16 +1,15 @@
-package com.example.adventofcode2023.day2
+package be.gerard.adventofcode2023.day2
 
-import com.example.adventofcode2023.FileUtils
+
 import spock.lang.Specification
+
+import static be.gerard.Lines.fromFile
 
 class ColorColourGameTest extends Specification {
 
     def "sum games that can be played with max cubes by colour"() {
-        given:
-        final List<String> inputLines = FileUtils.read(input)
-
         when:
-        final List<ColourGame> games = ColourGame.parse(inputLines)
+        final List<ColourGame> games = ColourGame.parse(lines)
         final int sum = games.stream()
                 .filter { it.canBePlayedWith(maxCubesByColour) }
                 .mapToInt { it.id() }
@@ -20,9 +19,9 @@ class ColorColourGameTest extends Specification {
         sum == expectedResult
 
         where:
-        input        | maxCubesByColour                     | expectedResult | comment
-        "day2/a.txt" | ["red": 12, "green": 13, "blue": 14] | 8              | ""
-        "day2/b.txt" | ["red": 12, "green": 13, "blue": 14] | 2563           | ""
+        lines                  | maxCubesByColour                     | expectedResult | comment
+        fromFile("day2/a.txt") | ["red": 12, "green": 13, "blue": 14] | 8              | ""
+        fromFile("day2/b.txt") | ["red": 12, "green": 13, "blue": 14] | 2563           | ""
     }
 
     def "multiply min required cubes by colour to play game"() {
@@ -45,11 +44,8 @@ class ColorColourGameTest extends Specification {
     }
 
     def "sum all multiplications of min required cubes by colour to play game for all games"() {
-        given:
-        final List<String> inputLines = FileUtils.read(input)
-
         when:
-        final List<ColourGame> games = ColourGame.parse(inputLines)
+        final List<ColourGame> games = ColourGame.parse(lines)
         final int sum = games.stream()
                 .mapToInt { it.minRequiredCubesByColourMultiplied() }
                 .sum()
@@ -58,9 +54,9 @@ class ColorColourGameTest extends Specification {
         sum == expectedResult
 
         where:
-        input        | expectedResult | comment
-        "day2/a.txt" | 2286           | ""
-        "day2/b.txt" | 70768          | ""
+        lines                  | expectedResult | comment
+        fromFile("day2/a.txt") | 2286           | ""
+        fromFile("day2/b.txt") | 70768          | ""
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.adventofcode2023.day1;
+package be.gerard.adventofcode2023.day1;
 
 
 import java.util.Collection;
@@ -6,17 +6,20 @@ import java.util.OptionalInt;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NumberParser {
-
+public final class Numbers {
     private static final String NUMBER = "\\d|one|two|three|four|five|six|seven|eight|nine";
     public static final String ONE_NUMBER = "[^" + NUMBER + "]*(" + NUMBER + ").*";
     public static final String TWO_NUMBERS = ONE_NUMBER + "(" + NUMBER + ")[^" + NUMBER + "]*";
-    private static final Pattern ONE_NUMBER_PATTERN = Pattern.compile(ONE_NUMBER);
     private static final Pattern TWO_NUMBERS_PATTERN = Pattern.compile(TWO_NUMBERS);
+    private static final Pattern ONE_NUMBER_PATTERN = Pattern.compile(ONE_NUMBER);
+
+    private Numbers() {
+        // no-op
+    }
 
     static int sumAllFirstAndLastNumbers(final Collection<String> input) {
         return input.stream()
-                .map(NumberParser::firstAndLastNumber)
+                .map(Numbers::firstAndLastNumber)
                 .flatMapToInt(OptionalInt::stream)
                 .sum();
     }

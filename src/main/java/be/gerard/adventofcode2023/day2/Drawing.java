@@ -1,4 +1,4 @@
-package com.example.adventofcode2023.day2;
+package be.gerard.adventofcode2023.day2;
 
 import java.util.Arrays;
 import java.util.Map;

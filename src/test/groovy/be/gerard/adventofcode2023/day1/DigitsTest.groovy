@@ -1,54 +1,49 @@
-package com.example.adventofcode2023.day1
+package be.gerard.adventofcode2023.day1
 
-import com.example.adventofcode2023.FileUtils
 import spock.lang.Specification
 
-class DigitParserTest extends Specification {
+import static be.gerard.Lines.fromFile
+
+class DigitsTest extends Specification {
 
     def "sum all first and last digits"() {
-        given:
-        final List<String> inputLines = FileUtils.read(input)
-
         when:
-        final int sum = DigitParser.sumAllFirstAndLastDigits(inputLines)
+        final int sum = Digits.sumAllFirstAndLastDigits(lines)
 
         then:
         sum == expectedResult
 
         where:
-        input        | expectedResult | comment
-        "day1/a.txt" | 142            | ""
-        "day1/b.txt" | 55108          | ""
+        lines                  | expectedResult | comment
+        fromFile("day1/a.txt") | 142            | ""
+        fromFile("day1/b.txt") | 55108          | ""
     }
 
     def "sum all first and last numbers"() {
-        given:
-        final List<String> inputLines = FileUtils.read(input)
-
         when:
-        final int sum = DigitParser.sumAllFirstAndLastNumbers(inputLines)
+        final int sum = Digits.sumAllFirstAndLastNumbers(lines)
 
         then:
         sum == expectedResult
 
         where:
-        input        | expectedResult | comment
-        "day1/a.txt" | 142            | ""
-        "day1/b.txt" | 56324          | ""
-        "day1/c.txt" | 281            | ""
+        lines                  | expectedResult | comment
+        fromFile("day1/a.txt") | 142            | ""
+        fromFile("day1/b.txt") | 56324          | ""
+        fromFile("day1/c.txt") | 281            | ""
     }
 
     def "first and last digit"() {
         when:
-        final number = DigitParser.firstAndLastDigit(
-                DigitParser.filterNumbers(input)
+        final number = Digits.firstAndLastDigit(
+                Digits.filterNumbers(line)
         )
 
         then:
         number == expectedResult
 
         where:
-        input              | expectedResult | comment
+        line               | expectedResult | comment
         "1abc2"            | 12             | ""
         "pqr3stu8vwx"      | 38             | ""
         "a1b2c3d4e5f"      | 15             | ""
