@@ -3,7 +3,7 @@ package be.gerard.adventofcode2023.day3
 
 import spock.lang.Specification
 
-import static be.gerard.Lines.fromFile
+import static be.gerard.adventofcode2023.util.Lines.fromFile
 
 class EngineSchematicTest extends Specification {
 

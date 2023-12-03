@@ -1,7 +1,9 @@
 package be.gerard.adventofcode2023.day2;
 
-import java.util.Arrays;
-import java.util.Collection;
+import be.gerard.adventofcode2023.util.Line;
+import be.gerard.adventofcode2023.util.Lines;
+import be.gerard.adventofcode2023.util.Tokens;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -14,25 +16,22 @@ record ColourGame(
         int id,
         List<Drawing> drawings
 ) {
-    static List<ColourGame> parse(final Collection<String> gamesAsString) {
-        return gamesAsString.stream()
-                .map(ColourGame::parse)
-                .toList();
+    static Lines<ColourGame> parse(final Lines<String> lines) {
+        return lines.map(Line::new)
+                .map(line -> line.split(": "))
+                .map(ColourGame::from);
     }
 
-    static ColourGame parse(final String gameAsString) {
-        final String[] split = gameAsString.split(": ");
-
+    static ColourGame from(final Tokens<String> tokens) {
         return new ColourGame(
-                Integer.parseInt(split[0].substring(5)),
-                parseDrawings(split[1])
+                Integer.parseInt(tokens.first().substring(5)),
+                parseDrawings(tokens.last())
         );
     }
 
     private static List<Drawing> parseDrawings(final String drawings) {
-        return Arrays.stream(drawings.split("; "))
-                .map(Drawing::parse)
-                .toList();
+        return new Tokens<>(Line.split(drawings, "; "))
+                .as(Drawing::parse);
     }
 
     Map<String, Integer> minRequiredCubesByColour() {
@@ -57,7 +56,7 @@ record ColourGame(
                 .allMatch(entry -> minRequiredCubesByColour.get(entry.getKey()) <= entry.getValue());
     }
 
-    Integer minRequiredCubesByColourMultiplied() {
+    int minRequiredCubesByColourMultiplied() {
         return minRequiredCubesByColour().values()
                 .stream()
                 .reduce(1, (x, y) -> x * y);

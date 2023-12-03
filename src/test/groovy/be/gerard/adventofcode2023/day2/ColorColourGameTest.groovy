@@ -1,19 +1,18 @@
 package be.gerard.adventofcode2023.day2
 
-
+import be.gerard.adventofcode2023.util.Line
+import be.gerard.adventofcode2023.util.Lines
 import spock.lang.Specification
 
-import static be.gerard.Lines.fromFile
+import static be.gerard.adventofcode2023.util.Lines.fromFile
 
 class ColorColourGameTest extends Specification {
 
     def "sum games that can be played with max cubes by colour"() {
         when:
-        final List<ColourGame> games = ColourGame.parse(lines)
-        final int sum = games.stream()
-                .filter { it.canBePlayedWith(maxCubesByColour) }
-                .mapToInt { it.id() }
-                .sum()
+        final Lines<ColourGame> games = ColourGame.parse(lines)
+        final int sum = games.filter { it.canBePlayedWith(maxCubesByColour) }
+                .sum { it.id() }
 
         then:
         sum == expectedResult
@@ -26,7 +25,9 @@ class ColorColourGameTest extends Specification {
 
     def "multiply min required cubes by colour to play game"() {
         given:
-        final ColourGame game = ColourGame.parse(gameAsString)
+        final ColourGame game = ColourGame.from(new Line(0, gameAsString)
+                .split(": ")
+        )
 
         when:
         final int result = game.minRequiredCubesByColourMultiplied()
@@ -45,10 +46,8 @@ class ColorColourGameTest extends Specification {
 
     def "sum all multiplications of min required cubes by colour to play game for all games"() {
         when:
-        final List<ColourGame> games = ColourGame.parse(lines)
-        final int sum = games.stream()
-                .mapToInt { it.minRequiredCubesByColourMultiplied() }
-                .sum()
+        final Lines<ColourGame> games = ColourGame.parse(lines)
+        final int sum = games.sum { it.minRequiredCubesByColourMultiplied() }
 
         then:
         sum == expectedResult

@@ -1,15 +1,31 @@
 package be.gerard.adventofcode2023.day1
 
-
+import be.gerard.adventofcode2023.util.Line
+import be.gerard.adventofcode2023.util.Numbers
 import spock.lang.Specification
 
-import static be.gerard.Lines.fromFile
+import static be.gerard.adventofcode2023.util.Lines.fromFile
 
-class NumbersTest extends Specification {
+class CalibrationValueTest extends Specification {
 
-    def "sum all first and last numbers"() {
+    def "sum of all of the calibration values"() {
         when:
-        final int sum = Numbers.sumAllFirstAndLastNumbers(lines)
+        final int sum = CalibrationValue.calibrationValues(lines)
+                .sum { it.value() }
+
+        then:
+        sum == expectedResult
+
+        where:
+        lines                  | expectedResult | comment
+        fromFile("day1/a.txt") | 142            | ""
+        fromFile("day1/b.txt") | 55108          | ""
+    }
+
+    def "sum of all of the calibration values lenient"() {
+        when:
+        final int sum = CalibrationValue.lenientCalibrationValues(lines)
+                .sum { it.value() }
 
         then:
         sum == expectedResult
@@ -23,7 +39,11 @@ class NumbersTest extends Specification {
 
     def "first and last digit"() {
         when:
-        final int number = Numbers.firstAndLastNumber(line).orElseThrow()
+        final int number = CalibrationValue.from(new Line(0, line)
+                .tokenize(CalibrationValue.LENIENT_NUMBER_REGEX)
+                .map { Numbers.parseInt(it) }
+        )
+                .value()
 
         then:
         number == expectedResult

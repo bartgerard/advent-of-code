@@ -1,5 +1,7 @@
 package be.gerard.adventofcode2023.day3;
 
+import be.gerard.adventofcode2023.util.Range;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

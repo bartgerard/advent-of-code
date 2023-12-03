@@ -1,9 +1,10 @@
 package be.gerard.adventofcode2023.day3;
 
+import be.gerard.adventofcode2023.util.Lines;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptySet;
@@ -12,12 +13,8 @@ import static java.util.stream.Collectors.toUnmodifiableSet;
 record EngineSchematic(
         List<SchematicLine> schematicLines
 ) {
-    static EngineSchematic parse(final List<String> lines) {
-        final List<SchematicLine> schematicLines = IntStream.range(0, lines.size())
-                .mapToObj(i -> new SchematicLine(i, lines.get(i)))
-                .toList();
-
-        return new EngineSchematic(schematicLines);
+    static EngineSchematic parse(final Lines<String> lines) {
+        return new EngineSchematic(lines.as(SchematicLine::new));
     }
 
     private static Set<Integer> symbolAdjacentIndices(final Set<Integer> indices) {
