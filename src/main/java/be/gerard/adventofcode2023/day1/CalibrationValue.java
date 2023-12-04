@@ -28,7 +28,7 @@ public record CalibrationValue(
             final Lines<String> lines,
             final String numberRegex
     ) {
-        return lines.map(Line::new)
+        return lines.mapIndexed(Line::new)
                 .map(line -> line.tokenize(numberRegex))
                 .map(Tokens::firstAndLast)
                 .map(tokens -> tokens.map(Numbers::parseInt))

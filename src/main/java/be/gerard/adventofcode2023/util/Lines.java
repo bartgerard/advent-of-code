@@ -37,24 +37,24 @@ public record Lines<T>(
         return new Lines<>(reader.lines().toList());
     }
 
-    public <O> List<O> as(final Function<T, O> lineMapper) {
+    public <O> List<O> asListOf(final Function<T, O> lineMapper) {
         return values.stream()
                 .map(lineMapper)
                 .toList();
     }
 
-    public <O> List<O> as(final BiFunction<Integer, T, O> lineMapper) {
+    public <O> List<O> asListOfIndexed(final BiFunction<Integer, T, O> lineMapper) {
         return IntStream.range(0, values.size())
                 .mapToObj(i -> lineMapper.apply(i, values.get(i)))
                 .toList();
     }
 
     public <O> Lines<O> map(final Function<T, O> lineMapper) {
-        return new Lines<>(as(lineMapper));
+        return new Lines<>(asListOf(lineMapper));
     }
 
-    public <O> Lines<O> map(final BiFunction<Integer, T, O> lineMapper) {
-        return new Lines<>(as(lineMapper));
+    public <O> Lines<O> mapIndexed(final BiFunction<Integer, T, O> lineMapper) {
+        return new Lines<>(asListOfIndexed(lineMapper));
     }
 
     public Lines<T> filter(final Predicate<T> predicate) {

@@ -14,7 +14,7 @@ record EngineSchematic(
         List<SchematicLine> schematicLines
 ) {
     static EngineSchematic parse(final Lines<String> lines) {
-        return new EngineSchematic(lines.as(SchematicLine::new));
+        return new EngineSchematic(lines.asListOfIndexed(SchematicLine::new));
     }
 
     private static Set<Integer> symbolAdjacentIndices(final Set<Integer> indices) {

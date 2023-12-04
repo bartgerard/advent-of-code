@@ -33,6 +33,14 @@ public record Line(
                 .toList();
     }
 
+    public Tokens<Line> splitLine(final String regex) {
+        return new Tokens<>(split(value, regex)
+                .stream()
+                .map(value -> new Line(id, value))
+                .toList()
+        );
+    }
+
     public Tokens<String> split(final String regex) {
         return new Tokens<>(split(value, regex));
     }
