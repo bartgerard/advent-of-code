@@ -24,7 +24,7 @@ public record ScratchCard(
     static final String NUMBER_REGEX = "\\d+";
 
     static Lines<ScratchCard> parse(final Lines<String> lines) {
-        return lines.mapIndexed(Line::new)
+        return lines.mapLine(Line::new)
                 .map(ScratchCard::parse);
     }
 

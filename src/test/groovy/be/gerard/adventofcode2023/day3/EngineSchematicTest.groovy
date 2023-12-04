@@ -9,7 +9,7 @@ class EngineSchematicTest extends Specification {
 
     def "sum of all of the part numbers in the engine schematic"() {
         given:
-        final EngineSchematic schematic = EngineSchematic.parse(lines)
+        final EngineSchematic schematic = lines.mapLine(SchematicLine::new).as(EngineSchematic::new)
 
         when:
         final int sum = schematic.partNumbers()
@@ -28,7 +28,7 @@ class EngineSchematicTest extends Specification {
 
     def "sum of all ratios of every gear"() {
         given:
-        final EngineSchematic schematic = EngineSchematic.parse(lines)
+        final EngineSchematic schematic = lines.mapLine(SchematicLine::new).as(EngineSchematic::new)
 
         when:
         final int sum = schematic.gearRatios()

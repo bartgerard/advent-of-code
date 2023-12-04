@@ -23,9 +23,8 @@ class ScratchCardTest extends Specification {
 
     def "total number of scratchcards won"() {
         when:
-        final int sum = ScratchCard.totalNumberOfScratchCardsWon(ScratchCard.parse(lines)
-                .asListOf { it }
-        )
+        final int sum = ScratchCard.parse(lines)
+                .apply { ScratchCard.totalNumberOfScratchCardsWon(it) }
 
         then:
         sum == expectedResult

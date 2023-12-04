@@ -17,7 +17,7 @@ record ColourGame(
         List<Drawing> drawings
 ) {
     static Lines<ColourGame> parse(final Lines<String> lines) {
-        return lines.mapIndexed(Line::new)
+        return lines.mapLine(Line::new)
                 .map(line -> line.split(": "))
                 .map(ColourGame::from);
     }

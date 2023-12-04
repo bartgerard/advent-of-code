@@ -12,6 +12,8 @@ import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toUnmodifiableList;
 
 public record Lines<T>(
         List<T> values
@@ -37,24 +39,31 @@ public record Lines<T>(
         return new Lines<>(reader.lines().toList());
     }
 
-    public <O> List<O> asListOf(final Function<T, O> lineMapper) {
-        return values.stream()
-                .map(lineMapper)
-                .toList();
+    public <O> O apply(final Function<List<T>, O> function) {
+        return function.apply(values);
     }
 
-    public <O> List<O> asListOfIndexed(final BiFunction<Integer, T, O> lineMapper) {
+    public <O> O as(final Function<List<T>, O> function) {
+        return function.apply(values);
+    }
+
+    public <O> List<O> asListOf(final BiFunction<Integer, T, O> lineMapper) {
         return IntStream.range(0, values.size())
                 .mapToObj(i -> lineMapper.apply(i, values.get(i)))
                 .toList();
     }
 
     public <O> Lines<O> map(final Function<T, O> lineMapper) {
-        return new Lines<>(asListOf(lineMapper));
+        return values.stream()
+                .map(lineMapper)
+                .collect(collectingAndThen(
+                        toUnmodifiableList(),
+                        Lines::new
+                ));
     }
 
-    public <O> Lines<O> mapIndexed(final BiFunction<Integer, T, O> lineMapper) {
-        return new Lines<>(asListOfIndexed(lineMapper));
+    public <O> Lines<O> mapLine(final BiFunction<Integer, T, O> lineMapper) {
+        return new Lines<>(asListOf(lineMapper));
     }
 
     public Lines<T> filter(final Predicate<T> predicate) {

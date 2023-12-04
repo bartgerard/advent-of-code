@@ -28,10 +28,11 @@ public record CalibrationValue(
             final Lines<String> lines,
             final String numberRegex
     ) {
-        return lines.mapIndexed(Line::new)
-                .map(line -> line.tokenize(numberRegex))
-                .map(Tokens::firstAndLast)
-                .map(tokens -> tokens.map(Numbers::parseInt))
+        return lines.mapLine(Line::new)
+                .map(line -> line.tokenize(numberRegex)
+                        .firstAndLast()
+                        .map(Numbers::parseInt)
+                )
                 .map(CalibrationValue::from);
     }
 
