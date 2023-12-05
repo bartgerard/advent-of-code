@@ -17,8 +17,8 @@
     <description>advent-of-code</description>
 
     <modules>
-        <module>utils</module>
-        <module>aoc-203</module>
+        <module>aoc-utils</module>
+        <module>aoc-2023</module>
     </modules>
 
     <properties>
