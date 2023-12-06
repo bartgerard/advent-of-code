@@ -46,7 +46,7 @@ public record Almanac(
     ) {
         final Lines<Lines<String>> lineGroups = lines.splitBy(String::isBlank);
         final List<LongRange> seeds = seedFunction.apply(lineGroups.first().first());
-        final List<CategoryMap> mapping = lineGroups.others()
+        final List<CategoryMap> mapping = lineGroups.nonFirst()
                 .stream()
                 .map(CategoryMap::parse)
                 .toList();

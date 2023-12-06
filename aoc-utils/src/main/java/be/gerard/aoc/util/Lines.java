@@ -114,9 +114,13 @@ public record Lines<T>(
         return values.get(0);
     }
 
-    public List<T> others() {
+    public List<T> nonFirst() {
         return IntStream.range(1, values.size())
                 .mapToObj(values::get)
                 .toList();
+    }
+
+    public T last() {
+        return values.get(values.size() - 1);
     }
 }

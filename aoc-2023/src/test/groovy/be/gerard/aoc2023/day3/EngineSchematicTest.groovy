@@ -1,7 +1,6 @@
 package be.gerard.aoc2023.day3
 
-import be.gerard.aoc2023.day3.EngineSchematic
-import be.gerard.aoc2023.day3.SchematicLine
+
 import spock.lang.Specification
 
 import static be.gerard.aoc.util.Lines.fromFile

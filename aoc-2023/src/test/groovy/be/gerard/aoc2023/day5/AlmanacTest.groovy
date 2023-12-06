@@ -1,6 +1,5 @@
 package be.gerard.aoc2023.day5
 
-import be.gerard.aoc2023.day5.Almanac
 import spock.lang.Specification
 
 import static be.gerard.aoc.util.Lines.fromFile

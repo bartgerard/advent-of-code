@@ -1,6 +1,6 @@
 package be.gerard.aoc2023.day4
 
-import be.gerard.aoc2023.day4.ScratchCard
+
 import spock.lang.Specification
 
 import static be.gerard.aoc.util.Lines.fromFile

@@ -2,7 +2,6 @@ package be.gerard.aoc2023.day1
 
 import be.gerard.aoc.util.Line
 import be.gerard.aoc.util.Numbers
-import be.gerard.aoc2023.day1.CalibrationValue
 import spock.lang.Specification
 
 import static be.gerard.aoc.util.Lines.fromFile

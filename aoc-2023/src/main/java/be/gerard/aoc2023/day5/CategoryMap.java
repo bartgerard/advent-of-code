@@ -16,7 +16,7 @@ public record CategoryMap(
 
     public static CategoryMap parse(final Lines<String> lines) {
         final List<String> categories = Tokens.tokenize(lines.first(), CATEGORY_MAPPING_PATTERN);
-        final List<Transformation> transformations = lines.others()
+        final List<Transformation> transformations = lines.nonFirst()
                 .stream()
                 .map(Transformation::parse)
                 .toList();

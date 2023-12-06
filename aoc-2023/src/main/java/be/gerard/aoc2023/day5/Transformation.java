@@ -118,7 +118,7 @@ public record Transformation(
     }
 
     public String toInput() {
-        return "%d %d %d".formatted(sourceRange.fromInclusive() - difference, sourceRange.fromInclusive(), sourceRange.length() + 1);
+        return "%d %d %d".formatted(sourceRange.fromInclusive() - difference, sourceRange.fromInclusive(), sourceRange.length());
     }
 
     @Override

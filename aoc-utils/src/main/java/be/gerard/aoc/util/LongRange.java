@@ -210,7 +210,7 @@ public record LongRange(
     }
 
     public long length() {
-        return toInclusive - fromInclusive;
+        return toInclusive - fromInclusive + 1;
     }
 
     @Override

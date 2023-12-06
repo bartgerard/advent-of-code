@@ -1,6 +1,6 @@
 package be.gerard.aoc2023.day5
 
-import be.gerard.aoc2023.day5.Transformation
+
 import spock.lang.Specification
 
 import static org.assertj.core.api.Assertions.assertThat
