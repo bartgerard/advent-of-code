@@ -15,9 +15,9 @@ record Lap(
         final long recordBreakingStartSpeed = LongStream.rangeClosed(minimalRequiredSpeedToBreakRecord(), halfTime)
                 .filter(this::isNewRecord)
                 .findFirst()
-                .orElse(-1);
+                .orElse(0);
 
-        if (recordBreakingStartSpeed < 0) {
+        if (recordBreakingStartSpeed == 0) {
             return 0;
         }
 
