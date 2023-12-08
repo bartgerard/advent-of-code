@@ -1,15 +1,19 @@
 package be.gerard.aoc2023.day8;
 
 import be.gerard.aoc.util.Lines;
+import be.gerard.aoc.util.Numbers;
 import be.gerard.aoc.util.Tokens;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.LongStream;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toUnmodifiableMap;
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 record Network(
         List<Direction> directions,
@@ -52,9 +56,44 @@ record Network(
                 .as(nodes -> new Network(directions, nodes));
     }
 
-    int stepsBetween(
+    long stepsBetween(
             final String sourceNodeId,
             final String destinationNodeId
+    ) {
+        return stepsBetween(
+                sourceNodeId,
+                Set.of(destinationNodeId)
+        );
+    }
+
+    long multiverseStepsBetween(
+            final String sourceNodeIdPattern,
+            final String destinationNodeIdPattern
+    ) {
+        final Set<String> destinationNodeIds = nodes.values()
+                .stream()
+                .map(Node::nodeId)
+                .filter(s -> s.matches(destinationNodeIdPattern))
+                .collect(toUnmodifiableSet());
+
+        final List<String> sourceNodeIds = nodes.values()
+                .stream()
+                .map(Node::nodeId)
+                .filter(s -> s.matches(sourceNodeIdPattern))
+                .toList();
+
+        final long[] stepsBySource = sourceNodeIds.stream()
+                .mapToLong(sourceNodeId -> stepsBetween(sourceNodeId, destinationNodeIds))
+                .distinct()
+                .sorted()
+                .toArray();
+
+        return Numbers.lcm(stepsBySource);
+    }
+
+    long stepsBetween(
+            final String sourceNodeId,
+            final Set<String> destinationNodeIds
     ) {
         final Node sourceNode = nodes.get(sourceNodeId);
 
@@ -66,9 +105,10 @@ record Network(
             final Node currentNode = nodes.getOrDefault(currentNodeId, sourceNode);
             currentNodeId = currentNode.go(direction);
 
-            if (Objects.equals(currentNodeId, destinationNodeId)) {
+            if (destinationNodeIds.contains(currentNodeId)) {
                 return i + 1;
             }
         }
     }
+
 }
