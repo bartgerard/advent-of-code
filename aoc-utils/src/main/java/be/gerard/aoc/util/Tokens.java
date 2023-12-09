@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public record Tokens<T>(
         List<T> values
 ) {
-    private static final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
+    private static final Pattern NUMBER_PATTERN = Pattern.compile("-?\\d+");
 
     public static Tokens<String> parse(
             final String value,
