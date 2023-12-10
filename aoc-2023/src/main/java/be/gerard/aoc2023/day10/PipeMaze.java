@@ -2,42 +2,65 @@ package be.gerard.aoc2023.day10;
 
 import be.gerard.aoc.util.Lines;
 import be.gerard.aoc.util.Point2d;
-import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import static java.util.Collections.unmodifiableSet;
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
 record PipeMaze(
-        char[][] tiles
+        Point2d start,
+        TileType[][] tiles
 ) {
     static PipeMaze parse(final Lines<String> lines) {
+        final TileType[][] tiles = lines.map(line -> line.chars()
+                        .mapToObj(TileType::parse)
+                        .toArray(TileType[]::new)
+                )
+                .as(row -> row.toArray(TileType[][]::new));
+
+        final Point2d start = findStart(tiles).orElseThrow();
+
         return new PipeMaze(
-                lines.map(String::toCharArray).as(row -> row.toArray(char[][]::new))
+                start,
+                replaceStart(tiles, start)
         );
     }
 
-    Optional<Point2d> findStart() {
+    static TileType[][] replaceStart(
+            final TileType[][] tiles,
+            final Point2d start
+    ) {
+        final Set<Direction> directionsForStart = allMoves(tiles, start).stream()
+                .map(Move::sourceDirection)
+                .map(Direction::inverse)
+                .collect(toUnmodifiableSet());
+
+        final TileType startType = TileType.toType(directionsForStart);
+
+        tiles[start.y()][start.x()] = startType;
+
+        return tiles;
+    }
+
+    static Optional<Point2d> findStart(final TileType[][] tiles) {
         return IntStream.range(0, tiles.length)
                 .boxed()
                 .flatMap(i -> IntStream.range(0, tiles[i].length)
-                        .filter(j -> tiles[i][j] == 'S')
+                        .filter(j -> tiles[i][j] == TileType.START)
                         .mapToObj(j -> Point2d.of(j, i))
                 )
                 .findFirst();
     }
 
-    int numberOfStepsToFarthestPointFromStartingPosition() {
-        final Point2d start = findStart().orElseThrow();
-
+    Set<Point2d> findLoopTiles() {
         final Set<Point2d> previousPoints = new HashSet<>();
         previousPoints.add(start);
-
-        int steps = 0;
 
         final Set<Point2d> newPoints = new HashSet<>(destinationsFor(start, previousPoints));
 
@@ -50,36 +73,46 @@ record PipeMaze(
                     .collect(toUnmodifiableSet());
             newPoints.clear();
             newPoints.addAll(destinations);
-            steps++;
         }
 
-        return steps;
+        return unmodifiableSet(previousPoints);
     }
 
-    TileType tileTypeAt(final Point2d point) {
-        return TileType.parse(tiles[point.y()][point.x()]);
+    int numberOfStepsToFarthestPointFromStartingPosition() {
+        final int loopSize = findLoopTiles().size();
+        return loopSize / 2 + loopSize % 2;
     }
 
     Set<Point2d> destinationsFor(final Point2d point, final Set<Point2d> previousPoints) {
-        final Set<Direction> directions = tileTypeAt(point).directions();
-
-        return directions.stream()
-                .map(direction -> Pair.of(direction, destinationPoint(point, direction)))
-                .filter(pair -> isValid(pair.getValue()))
-                .filter(pair -> tileTypeAt(pair.getValue()).directions().contains(pair.getKey().sourceDirection()))
-                .map(Pair::getValue)
+        return allMoves(tiles, point)
+                .stream()
+                .map(Move::point)
                 .filter(not(previousPoints::contains))
                 .collect(toUnmodifiableSet());
     }
 
-    private boolean isValid(final Point2d point) {
+    private static boolean isValid(
+            final TileType[][] tiles,
+            final Point2d point
+    ) {
         return point.x() >= 0
                 && point.y() >= 0
                 && point.y() < tiles.length
                 && point.x() < tiles[point.y()].length;
     }
 
-    Point2d destinationPoint(
+    static Set<Move> allMoves(
+            final TileType[][] tiles,
+            final Point2d point
+    ) {
+        return tiles[point.y()][point.x()].directions().stream()
+                .map(direction -> Move.of(move(point, direction), direction.inverse()))
+                .filter(move -> isValid(tiles, move.point()))
+                .filter(move -> tiles[move.point().y()][move.point().x()].directions().contains(move.sourceDirection()))
+                .collect(toUnmodifiableSet());
+    }
+
+    private static Point2d move(
             final Point2d point,
             final Direction direction
     ) {
@@ -89,5 +122,33 @@ record PipeMaze(
             case SOUTH -> Point2d.of(point.x(), point.y() + 1);
             case WEST -> Point2d.of(point.x() - 1, point.y());
         };
+    }
+
+    long numberOfEnclosedTiles() {
+        final Set<Point2d> loopTiles = findLoopTiles();
+
+        final TileState[][] states = new TileState[tiles.length][tiles[0].length];
+
+        for (int y = 0; y < tiles.length; y++) {
+            Corners previous = Corners.OUTSIDE;
+
+            for (int x = 0; x < tiles[y].length; x++) {
+                final Point2d point = Point2d.of(x, y);
+                final boolean isLoop = loopTiles.contains(point);
+                final TileType tileType = isLoop ? tiles[y][x] : TileType.GROUND;
+
+                final Corners current = previous.whenMovingTo(tileType);
+                previous = current;
+
+                states[y][x] = current.toTileState();
+            }
+        }
+
+        return Arrays.stream(states)
+                .mapToLong(state -> IntStream.range(0, state.length)
+                        .filter(x -> state[x] == TileState.INSIDE)
+                        .count()
+                )
+                .sum();
     }
 }

@@ -6,7 +6,7 @@ enum Direction {
     SOUTH,
     WEST;
 
-    Direction sourceDirection() {
+    Direction inverse() {
         return switch (this) {
             case NORTH -> SOUTH;
             case EAST -> WEST;

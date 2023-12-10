@@ -1,5 +1,6 @@
 package be.gerard.aoc2023.day10;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import static be.gerard.aoc2023.day10.Direction.EAST;
@@ -22,40 +23,56 @@ import static java.util.Collections.emptySet;
  */
 enum TileType {
 
-    GROUND(emptySet()),
+    GROUND('.', emptySet()),
 
-    START_TILE(Set.of(NORTH, EAST, SOUTH, WEST)),
+    START('S', Set.of(NORTH, EAST, SOUTH, WEST)),
 
-    VERTICAL_PIPE(Set.of(NORTH, SOUTH)),
+    VERTICAL_PIPE('|', Set.of(NORTH, SOUTH)),
 
-    HORIZONTAL_PIPE(Set.of(WEST, EAST)),
+    HORIZONTAL_PIPE('-', Set.of(WEST, EAST)),
 
-    NORTH_EAST_BEND(Set.of(NORTH, EAST)),
+    NORTH_EAST_BEND('L', Set.of(NORTH, EAST)),
 
-    NORTH_WEST_BEND(Set.of(NORTH, WEST)),
+    NORTH_WEST_BEND('J', Set.of(NORTH, WEST)),
 
-    SOUTH_WEST_BEND(Set.of(WEST, SOUTH)),
+    SOUTH_WEST_BEND('7', Set.of(WEST, SOUTH)),
 
-    SOUTH_EAST_BEND(Set.of(EAST, SOUTH));
+    SOUTH_EAST_BEND('F', Set.of(EAST, SOUTH));
 
+    private final char label;
     private final Set<Direction> directions;
 
-    TileType(final Set<Direction> directions) {
+    TileType(
+            final char label,
+            final Set<Direction> directions
+    ) {
+        this.label = label;
         this.directions = directions;
     }
 
-    static TileType parse(final char tile) {
-        return switch (tile) {
+    static TileType parse(final int value) {
+        return switch ((char) value) {
             case '|' -> VERTICAL_PIPE;
             case '-' -> HORIZONTAL_PIPE;
             case 'L' -> NORTH_EAST_BEND;
             case 'J' -> NORTH_WEST_BEND;
             case '7' -> SOUTH_WEST_BEND;
             case 'F' -> SOUTH_EAST_BEND;
-            case 'S' -> START_TILE;
+            case 'S' -> START;
             //case '.' -> GROUND;
             default -> GROUND;
         };
+    }
+
+    static TileType toType(final Set<Direction> directions) {
+        return Arrays.stream(values())
+                .filter(type -> directions.containsAll(type.directions()) && type.directions().containsAll(directions))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    public char label() {
+        return label;
     }
 
     public Set<Direction> directions() {
