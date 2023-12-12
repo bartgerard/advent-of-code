@@ -1,6 +1,7 @@
 package be.gerard.aoc2023.day12;
 
 import be.gerard.aoc.util.Tokens;
+import org.apache.commons.math3.util.CombinatoricsUtils;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -94,15 +95,29 @@ record ConditionRecord(
             return countPossibleArrangementsAndCacheCount(subRecord);
         } else if (conditions.endsWith(DAMAGED_SPRING)) {
             return countPossibleArrangementsAndCacheCount(record.reverse());
-        } else if (record.groups().size() == 1 && conditions.length() < record.groups().getFirst()) {
-            return 0;
-        } else if (record.groups().getLast() > record.groups().getFirst()) {
-            return countPossibleArrangementsAndCacheCount(record.reverse());
-        } /*else if (!conditions.contains(OPERATIONAL_SPRING) && !conditions.contains(DAMAGED_SPRING)) {
-            final int numberOfOperationalSprings = conditions.length() - sum(record.groups());
+        }
 
-            return CombinatoricsUtils.binomialCoefficient(conditions.length() - 2, numberOfOperationalSprings);
-        }*/
+        final boolean containsOnlyUnknowns = !conditions.contains(OPERATIONAL_SPRING) && !conditions.contains(DAMAGED_SPRING);
+
+        if (record.groups().size() == 1) {
+            if (conditions.length() < record.groups().getFirst()) {
+                return 0;
+            } else if (containsOnlyUnknowns) {
+                return conditions.length() - record.groups().getFirst() + 1;
+            }
+        }
+
+        if (record.groups().getLast() > record.groups().getFirst()) {
+            return countPossibleArrangementsAndCacheCount(record.reverse());
+        }
+
+        if (!conditions.contains(OPERATIONAL_SPRING) && !conditions.contains(DAMAGED_SPRING)) {
+            final int sum = sum(record.groups());
+            final int lengthIfGroupsOfOne = conditions.length() - sum + 1;
+
+            return CombinatoricsUtils.binomialCoefficient(lengthIfGroupsOfOne, record.groups().size());
+            //return Numbers.combinations(record.groups().size(), lengthIfGroupsOfOne);
+        }
 
         return Stream.of(
                         new ConditionRecord(

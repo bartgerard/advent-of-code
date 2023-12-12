@@ -9,6 +9,7 @@ import java.util.stream.LongStream;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Objects.requireNonNullElse;
 import static java.util.stream.Collectors.toUnmodifiableMap;
+import static org.apache.commons.lang3.Validate.isTrue;
 
 public final class Numbers {
     private Numbers() {
@@ -65,7 +66,29 @@ public final class Numbers {
 
     public static long factorial(final long n) {
         //CombinatoricsUtils.factorial(n);
-        return LongStream.range(1, n)
+        return LongStream.rangeClosed(1, n)
                 .reduce(1, (x, y) -> x * y);
+    }
+
+    public static long triangular(final long n) {
+        return n * (n + 1) / 2;
+    }
+
+    public static long combinations(
+            final long k,
+            final long n
+    ) {
+        isTrue(0 <= k, "k should be positive");
+        isTrue(k <= n, "k should be smaller or equal to n");
+
+        return factorial(n) / (factorial(k) * factorial(n - k));
+    }
+
+    public static long simplex(
+            final long k,
+            final long n
+    ) {
+        return combinations(k, n + k);
+
     }
 }
