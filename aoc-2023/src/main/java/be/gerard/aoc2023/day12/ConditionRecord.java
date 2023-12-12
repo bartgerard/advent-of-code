@@ -114,6 +114,7 @@ record ConditionRecord(
         if (!conditions.contains(OPERATIONAL_SPRING) && !conditions.contains(DAMAGED_SPRING)) {
             final int sum = sum(record.groups());
             final int lengthIfGroupsOfOne = conditions.length() - sum + 1;
+            // == length - sum '#' + # groups - # holes between groups
 
             return CombinatoricsUtils.binomialCoefficient(lengthIfGroupsOfOne, record.groups().size());
             //return Numbers.combinations(record.groups().size(), lengthIfGroupsOfOne);
