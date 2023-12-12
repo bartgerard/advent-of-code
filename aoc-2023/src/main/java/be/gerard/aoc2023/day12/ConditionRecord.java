@@ -96,13 +96,13 @@ record ConditionRecord(
             return countPossibleArrangementsAndCacheCount(record.reverse());
         } else if (record.groups().size() == 1 && conditions.length() < record.groups().getFirst()) {
             return 0;
+        } else if (record.groups().getLast() > record.groups().getFirst()) {
+            return countPossibleArrangementsAndCacheCount(record.reverse());
         } /*else if (!conditions.contains(OPERATIONAL_SPRING) && !conditions.contains(DAMAGED_SPRING)) {
             final int numberOfOperationalSprings = conditions.length() - sum(record.groups());
 
             return CombinatoricsUtils.binomialCoefficient(conditions.length() - 2, numberOfOperationalSprings);
-        }*/ else if (record.groups().getLast() > record.groups().getFirst()) {
-            return countPossibleArrangementsAndCacheCount(record.reverse());
-        }
+        }*/
 
         return Stream.of(
                         new ConditionRecord(

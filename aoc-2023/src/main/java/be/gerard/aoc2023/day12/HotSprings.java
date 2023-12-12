@@ -21,7 +21,6 @@ record HotSprings(
     long sumOfAllPossibleArrangements() {
         return records.stream()
                 .mapToLong(ConditionRecord::countPossibleArrangements)
-                .peek(System.out::println)
                 .sum();
     }
 }
