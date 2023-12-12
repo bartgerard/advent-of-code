@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.LongStream;
 
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Objects.requireNonNullElse;
@@ -60,5 +61,11 @@ public final class Numbers {
                 .stream()
                 .map(entry -> (long) Math.pow(entry.getKey(), entry.getValue()))
                 .reduce(1L, (x, y) -> x * y);
+    }
+
+    public static long factorial(final long n) {
+        //CombinatoricsUtils.factorial(n);
+        return LongStream.range(1, n)
+                .reduce(1, (x, y) -> x * y);
     }
 }

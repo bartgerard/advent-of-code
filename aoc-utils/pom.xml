@@ -11,4 +11,13 @@
 
     <artifactId>aoc-utils</artifactId>
 
+
+    <dependencies>
+        <!-- apache -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math3</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

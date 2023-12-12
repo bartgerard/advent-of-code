@@ -37,6 +37,10 @@ public record Tokens<T>(
         return parse(value, NUMBER_PATTERN).as(Long::parseLong);
     }
 
+    public static List<Integer> asIntegers(final String value) {
+        return parse(value, NUMBER_PATTERN).as(Integer::parseInt);
+    }
+
     public static List<String> split(
             final String value,
             final String regex
