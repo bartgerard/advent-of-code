@@ -24,12 +24,6 @@ record Mirrors(
         return new Mirrors(patterns);
     }
 
-    long summarize(final int numberOfSmudges) {
-        return patterns.stream()
-                .mapToLong(pattern -> summarize(pattern, numberOfSmudges))
-                .sum();
-    }
-
     private static long summarize(
             final IntMatrix pattern,
             final int numberOfSmudges
@@ -86,5 +80,11 @@ record Mirrors(
                 .map(i -> i + 1)
                 .findFirst()
                 .orElse(0);
+    }
+
+    long summarize(final int numberOfSmudges) {
+        return patterns.stream()
+                .mapToLong(pattern -> summarize(pattern, numberOfSmudges))
+                .sum();
     }
 }

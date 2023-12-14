@@ -1,5 +1,6 @@
 package be.gerard.aoc2023.day10;
 
+import be.gerard.aoc.util.CardinalDirection;
 import be.gerard.aoc.util.Lines;
 import be.gerard.aoc.util.Point2d;
 
@@ -36,9 +37,9 @@ record PipeMaze(
             final TileType[][] tiles,
             final Point2d start
     ) {
-        final Set<Direction> directionsForStart = allMoves(tiles, start).stream()
+        final Set<CardinalDirection> directionsForStart = allMoves(tiles, start).stream()
                 .map(Move::sourceDirection)
-                .map(Direction::inverse)
+                .map(CardinalDirection::inverse)
                 .collect(toUnmodifiableSet());
 
         final TileType startType = TileType.toType(directionsForStart);
@@ -56,6 +57,39 @@ record PipeMaze(
                         .mapToObj(j -> Point2d.of(j, i))
                 )
                 .findFirst();
+    }
+
+    private static boolean isValid(
+            final TileType[][] tiles,
+            final Point2d point
+    ) {
+        return point.x() >= 0
+                && point.y() >= 0
+                && point.y() < tiles.length
+                && point.x() < tiles[point.y()].length;
+    }
+
+    static Set<Move> allMoves(
+            final TileType[][] tiles,
+            final Point2d point
+    ) {
+        return tiles[point.y()][point.x()].directions().stream()
+                .map(direction -> Move.of(move(point, direction), direction.inverse()))
+                .filter(move -> isValid(tiles, move.point()))
+                .filter(move -> tiles[move.point().y()][move.point().x()].directions().contains(move.sourceDirection()))
+                .collect(toUnmodifiableSet());
+    }
+
+    private static Point2d move(
+            final Point2d point,
+            final CardinalDirection direction
+    ) {
+        return switch (direction) {
+            case NORTH -> Point2d.of(point.x(), point.y() - 1);
+            case EAST -> Point2d.of(point.x() + 1, point.y());
+            case SOUTH -> Point2d.of(point.x(), point.y() + 1);
+            case WEST -> Point2d.of(point.x() - 1, point.y());
+        };
     }
 
     Set<Point2d> findLoopTiles() {
@@ -89,39 +123,6 @@ record PipeMaze(
                 .map(Move::point)
                 .filter(not(previousPoints::contains))
                 .collect(toUnmodifiableSet());
-    }
-
-    private static boolean isValid(
-            final TileType[][] tiles,
-            final Point2d point
-    ) {
-        return point.x() >= 0
-                && point.y() >= 0
-                && point.y() < tiles.length
-                && point.x() < tiles[point.y()].length;
-    }
-
-    static Set<Move> allMoves(
-            final TileType[][] tiles,
-            final Point2d point
-    ) {
-        return tiles[point.y()][point.x()].directions().stream()
-                .map(direction -> Move.of(move(point, direction), direction.inverse()))
-                .filter(move -> isValid(tiles, move.point()))
-                .filter(move -> tiles[move.point().y()][move.point().x()].directions().contains(move.sourceDirection()))
-                .collect(toUnmodifiableSet());
-    }
-
-    private static Point2d move(
-            final Point2d point,
-            final Direction direction
-    ) {
-        return switch (direction) {
-            case NORTH -> Point2d.of(point.x(), point.y() - 1);
-            case EAST -> Point2d.of(point.x() + 1, point.y());
-            case SOUTH -> Point2d.of(point.x(), point.y() + 1);
-            case WEST -> Point2d.of(point.x() - 1, point.y());
-        };
     }
 
     long numberOfEnclosedTiles() {

@@ -33,6 +33,24 @@ record Cosmos(
         );
     }
 
+    private static Point2d expand(
+            final Point2d galaxy,
+            final int[] xTransformations,
+            final int[] yTransformations
+    ) {
+        return Point2d.of(
+                galaxy.x() + xTransformations[galaxy.x()],
+                galaxy.y() + yTransformations[galaxy.y()]
+        );
+    }
+
+    private static long distanceBetween(
+            final Point2d p1,
+            final Point2d p2
+    ) {
+        return Math.abs(p2.y() - p1.y()) + Math.abs(p2.x() - p1.x());
+    }
+
     Cosmos expand(final int expansionFactor) {
         // each empty row/column will be {expansionFactor} times as large
 
@@ -49,17 +67,6 @@ record Cosmos(
                         max().x() + xTransformations[xTransformations.length - 1],
                         max().y() + yTransformations[yTransformations.length - 1]
                 )
-        );
-    }
-
-    private static Point2d expand(
-            final Point2d galaxy,
-            final int[] xTransformations,
-            final int[] yTransformations
-    ) {
-        return Point2d.of(
-                galaxy.x() + xTransformations[galaxy.x()],
-                galaxy.y() + yTransformations[galaxy.y()]
         );
     }
 
@@ -95,12 +102,5 @@ record Cosmos(
                         .sum()
                 )
                 .sum();
-    }
-
-    private static long distanceBetween(
-            final Point2d p1,
-            final Point2d p2
-    ) {
-        return Math.abs(p2.y() - p1.y()) + Math.abs(p2.x() - p1.x());
     }
 }

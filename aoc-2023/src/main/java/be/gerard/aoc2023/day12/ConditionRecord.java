@@ -17,11 +17,10 @@ record ConditionRecord(
         String conditions,
         List<Integer> groups // contiguous groups of damage springs
 ) {
-    private static final Map<ConditionRecord, Long> CACHE = new HashMap<>();
-
     public static final String UNKNOWN = "?";
     public static final String OPERATIONAL_SPRING = ".";
     public static final String DAMAGED_SPRING = "#";
+    private static final Map<ConditionRecord, Long> CACHE = new HashMap<>();
 
     static ConditionRecord parse(final String value) {
         final List<String> values = Tokens.split(value, " ");
@@ -38,11 +37,6 @@ record ConditionRecord(
     private static Integer sum(final List<Integer> groups) {
         return groups.stream().reduce(0, Integer::sum);
     }
-
-    long countPossibleArrangements() {
-        return countPossibleArrangementsAndCacheCount(this);
-    }
-
 
     static long countPossibleArrangementsAndCacheCount(final ConditionRecord record) {
         if (CACHE.containsKey(record)) {
@@ -134,17 +128,21 @@ record ConditionRecord(
                 .sum();
     }
 
+    private static String removeOuterOperationalSprings(final String conditions) {
+        return conditions
+                .replaceAll("\\.+$", "")
+                .replaceAll("^\\.+", "");
+    }
+
+    long countPossibleArrangements() {
+        return countPossibleArrangementsAndCacheCount(this);
+    }
+
     ConditionRecord reverse() {
         return new ConditionRecord(
                 new StringBuilder(conditions()).reverse().toString(),
                 groups().reversed()
         );
-    }
-
-    private static String removeOuterOperationalSprings(final String conditions) {
-        return conditions
-                .replaceAll("\\.+$", "")
-                .replaceAll("^\\.+", "");
     }
 
     ConditionRecord unfold(final int factor) {

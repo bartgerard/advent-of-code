@@ -10,6 +10,16 @@ import static java.util.Collections.unmodifiableList;
 record History(
         List<Long> values
 ) {
+    static boolean containsOnlyZeros(final List<Long> values) {
+        return values.stream().allMatch(i -> i == 0);
+    }
+
+    static List<Long> differences(final List<Long> values) {
+        return IntStream.range(1, values.size())
+                .mapToObj(i -> values.get(i) - values.get(i - 1))
+                .toList();
+    }
+
     long extrapolate() {
         return allDifferences().stream()
                 .mapToLong(differences -> differences.get(differences.size() - 1))
@@ -39,15 +49,5 @@ record History(
         }
 
         return unmodifiableList(differences);
-    }
-
-    static boolean containsOnlyZeros(final List<Long> values) {
-        return values.stream().allMatch(i -> i == 0);
-    }
-
-    static List<Long> differences(final List<Long> values) {
-        return IntStream.range(1, values.size())
-                .mapToObj(i -> values.get(i) - values.get(i - 1))
-                .toList();
     }
 }

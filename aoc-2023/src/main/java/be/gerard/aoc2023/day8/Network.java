@@ -4,12 +4,10 @@ import be.gerard.aoc.util.Lines;
 import be.gerard.aoc.util.Numbers;
 import be.gerard.aoc.util.Tokens;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.LongStream;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toUnmodifiableMap;
@@ -19,6 +17,8 @@ record Network(
         List<Direction> directions,
         Map<String, Node> nodes
 ) {
+    private static final Pattern PATTERN = Pattern.compile("(\\w+) = \\((\\w+), (\\w+)\\)");
+
     Network(
             final List<Direction> directions,
             final List<Node> nodes
@@ -32,8 +32,6 @@ record Network(
                         ))
         );
     }
-
-    private static final Pattern PATTERN = Pattern.compile("(\\w+) = \\((\\w+), (\\w+)\\)");
 
     static Network parse(final Lines<String> lines) {
         final Lines<Lines<String>> groups = lines.splitBy(String::isBlank);

@@ -1,12 +1,12 @@
-package be.gerard.aoc2023.day10;
+package be.gerard.aoc.util;
 
-enum Direction {
+public enum CardinalDirection {
     NORTH,
     EAST,
     SOUTH,
     WEST;
 
-    Direction inverse() {
+    public CardinalDirection inverse() {
         return switch (this) {
             case NORTH -> SOUTH;
             case EAST -> WEST;

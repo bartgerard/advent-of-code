@@ -1,12 +1,14 @@
 package be.gerard.aoc2023.day10;
 
+import be.gerard.aoc.util.CardinalDirection;
+
 import java.util.Arrays;
 import java.util.Set;
 
-import static be.gerard.aoc2023.day10.Direction.EAST;
-import static be.gerard.aoc2023.day10.Direction.NORTH;
-import static be.gerard.aoc2023.day10.Direction.SOUTH;
-import static be.gerard.aoc2023.day10.Direction.WEST;
+import static be.gerard.aoc.util.CardinalDirection.EAST;
+import static be.gerard.aoc.util.CardinalDirection.NORTH;
+import static be.gerard.aoc.util.CardinalDirection.SOUTH;
+import static be.gerard.aoc.util.CardinalDirection.WEST;
 import static java.util.Collections.emptySet;
 
 /**
@@ -40,11 +42,11 @@ enum TileType {
     SOUTH_EAST_BEND('F', Set.of(EAST, SOUTH));
 
     private final char label;
-    private final Set<Direction> directions;
+    private final Set<CardinalDirection> directions;
 
     TileType(
             final char label,
-            final Set<Direction> directions
+            final Set<CardinalDirection> directions
     ) {
         this.label = label;
         this.directions = directions;
@@ -64,7 +66,7 @@ enum TileType {
         };
     }
 
-    static TileType toType(final Set<Direction> directions) {
+    static TileType toType(final Set<CardinalDirection> directions) {
         return Arrays.stream(values())
                 .filter(type -> directions.containsAll(type.directions()) && type.directions().containsAll(directions))
                 .findFirst()
@@ -75,7 +77,7 @@ enum TileType {
         return label;
     }
 
-    public Set<Direction> directions() {
+    public Set<CardinalDirection> directions() {
         return directions;
     }
 }

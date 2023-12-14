@@ -5,6 +5,8 @@ package be.gerard.aoc2023.day10;
 //      X      |      X      |      X
 // OUT     IN  | OUT     IN  | OUT     OUT
 
+import be.gerard.aoc.util.CardinalDirection;
+
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,15 +24,6 @@ record Corners(
 ) {
     static final Corners OUTSIDE = Corners.of(OUT, OUT, OUT, OUT);
     static final Corners INSIDE = Corners.of(IN, IN, IN, IN);
-
-    enum State {
-        IN,
-        OUT;
-
-        State inverse() {
-            return this == IN ? OUT : IN;
-        }
-    }
 
     static Corners of(
             final State upperLeft,
@@ -57,13 +50,13 @@ record Corners(
     }
 
     Corners whenMovingTo(final TileType tileType) {
-        final Set<Direction> directions = tileType.directions();
+        final Set<CardinalDirection> directions = tileType.directions();
 
         return new Corners(
                 upperRight,
-                directions.contains(Direction.NORTH) ? upperRight.inverse() : upperRight,
+                directions.contains(CardinalDirection.NORTH) ? upperRight.inverse() : upperRight,
                 lowerRight,
-                directions.contains(Direction.SOUTH) ? lowerRight.inverse() : lowerRight
+                directions.contains(CardinalDirection.SOUTH) ? lowerRight.inverse() : lowerRight
         );
     }
 
@@ -74,6 +67,15 @@ record Corners(
                 lowerLeft.inverse(),
                 lowerRight.inverse()
         );
+    }
+
+    enum State {
+        IN,
+        OUT;
+
+        State inverse() {
+            return this == IN ? OUT : IN;
+        }
     }
 
 }
