@@ -6,7 +6,7 @@ import static be.gerard.aoc.util.Lines.fromFile
 
 class ParabolicReflectorDishTest extends Specification {
 
-    def "todo"() {
+    def "total load on the dish after tilting north"() {
         when:
         final ParabolicReflectorDish dish = ParabolicReflectorDish.parse(lines)
         final long totalLoad = dish.tiltNorth().totalLoad()
@@ -21,7 +21,7 @@ class ParabolicReflectorDishTest extends Specification {
         fromFile("day14/c.txt") | 109345         | ""
     }
 
-    def "todo2"() {
+    def "total load on the dish after spinning"() {
         when:
         final ParabolicReflectorDish dish = ParabolicReflectorDish.parse(lines)
         final long totalLoad = dish.spin(cycles).totalLoad()
