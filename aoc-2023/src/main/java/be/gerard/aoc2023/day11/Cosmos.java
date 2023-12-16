@@ -1,6 +1,7 @@
 package be.gerard.aoc2023.day11;
 
 import be.gerard.aoc.util.Lines;
+import be.gerard.aoc.util.Point;
 import be.gerard.aoc.util.Point2d;
 
 import java.util.List;
@@ -23,13 +24,13 @@ record Cosmos(
                     final String row = rows.get(y);
                     return IntStream.range(0, row.length())
                             .filter(x -> row.charAt(x) == '#')
-                            .mapToObj(x -> Point2d.of(x, y));
+                            .mapToObj(x -> Point.of(x, y));
                 })
                 .toList();
 
         return new Cosmos(
                 galaxies,
-                Point2d.of(rows.get(0).length(), rows.size())
+                Point.of(rows.get(0).length(), rows.size())
         );
     }
 
@@ -38,7 +39,7 @@ record Cosmos(
             final int[] xTransformations,
             final int[] yTransformations
     ) {
-        return Point2d.of(
+        return Point.of(
                 galaxy.x() + xTransformations[galaxy.x()],
                 galaxy.y() + yTransformations[galaxy.y()]
         );
@@ -63,7 +64,7 @@ record Cosmos(
 
         return new Cosmos(
                 expandedGalaxies,
-                Point2d.of(
+                Point.of(
                         max().x() + xTransformations[xTransformations.length - 1],
                         max().y() + yTransformations[yTransformations.length - 1]
                 )

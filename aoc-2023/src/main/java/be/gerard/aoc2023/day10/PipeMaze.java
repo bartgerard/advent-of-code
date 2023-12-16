@@ -2,6 +2,7 @@ package be.gerard.aoc2023.day10;
 
 import be.gerard.aoc.util.CardinalDirection;
 import be.gerard.aoc.util.Lines;
+import be.gerard.aoc.util.Point;
 import be.gerard.aoc.util.Point2d;
 
 import java.util.Arrays;
@@ -54,7 +55,7 @@ record PipeMaze(
                 .boxed()
                 .flatMap(i -> IntStream.range(0, tiles[i].length)
                         .filter(j -> tiles[i][j] == TileType.START)
-                        .mapToObj(j -> Point2d.of(j, i))
+                        .mapToObj(j -> Point.of(j, i))
                 )
                 .findFirst();
     }
@@ -85,10 +86,10 @@ record PipeMaze(
             final CardinalDirection direction
     ) {
         return switch (direction) {
-            case NORTH -> Point2d.of(point.x(), point.y() - 1);
-            case EAST -> Point2d.of(point.x() + 1, point.y());
-            case SOUTH -> Point2d.of(point.x(), point.y() + 1);
-            case WEST -> Point2d.of(point.x() - 1, point.y());
+            case NORTH -> Point.of(point.x(), point.y() - 1);
+            case EAST -> Point.of(point.x() + 1, point.y());
+            case SOUTH -> Point.of(point.x(), point.y() + 1);
+            case WEST -> Point.of(point.x() - 1, point.y());
         };
     }
 
@@ -134,7 +135,7 @@ record PipeMaze(
             Corners previous = Corners.OUTSIDE;
 
             for (int x = 0; x < tiles[y].length; x++) {
-                final Point2d point = Point2d.of(x, y);
+                final Point2d point = Point.of(x, y);
                 final boolean isLoop = loopTiles.contains(point);
                 final TileType tileType = isLoop ? tiles[y][x] : TileType.GROUND;
 

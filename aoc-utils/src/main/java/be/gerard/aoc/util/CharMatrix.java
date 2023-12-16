@@ -17,6 +17,10 @@ public record CharMatrix(
         );
     }
 
+    public char at(final Point2d point) {
+        return values[point.y()][point.x()];
+    }
+
     @Override
     public String toString() {
         return Arrays.deepToString(values);
