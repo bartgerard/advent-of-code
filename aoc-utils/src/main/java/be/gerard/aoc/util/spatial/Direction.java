@@ -2,9 +2,19 @@ package be.gerard.aoc.util.spatial;
 
 public enum Direction {
     UP,
+    RIGHT,
     DOWN,
-    LEFT,
-    RIGHT;
+    LEFT;
+
+    public static Direction parse(final String value) {
+        return switch (value) {
+            case "U" -> UP;
+            case "R" -> RIGHT;
+            case "D" -> DOWN;
+            case "L" -> LEFT;
+            default -> throw new IllegalArgumentException("invalid direction [%s]".formatted(value));
+        };
+    }
 
     public Direction inverse() {
         return switch (this) {

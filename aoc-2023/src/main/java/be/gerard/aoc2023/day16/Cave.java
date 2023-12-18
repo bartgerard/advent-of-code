@@ -1,8 +1,7 @@
 package be.gerard.aoc2023.day16;
 
-import be.gerard.aoc.util.matrix.CharMatrix;
 import be.gerard.aoc.util.input.Lines;
-import be.gerard.aoc.util.matrix.Matrix;
+import be.gerard.aoc.util.matrix.GenericMatrix;
 import be.gerard.aoc.util.point.Point;
 import be.gerard.aoc.util.point.Point2d;
 import be.gerard.aoc.util.vector.Ray;
@@ -21,7 +20,7 @@ import java.util.stream.Stream;
 import static java.util.function.Function.identity;
 
 record Cave(
-        CharMatrix layout
+        GenericMatrix<Character> layout
 ) {
     private static final char EMPTY_SPACE = '.';
     private static final char MIRROR_UP = '/';
@@ -30,12 +29,12 @@ record Cave(
     private static final char SPLITTER_HORIZONTAL = '-';
 
     static Cave parse(final Lines<String> lines) {
-        return new Cave(lines.as(Matrix::parse));
+        return new Cave(lines.as(GenericMatrix::parse));
     }
 
 
     long countEnergizedTiles(final Ray2d startRay) {
-        final int[][] tiles = new int[layout.values().length][layout.values()[0].length];
+        final int[][] tiles = new int[layout.height()][layout.width()];
         final Set<Ray2d> rays = raysStartingFrom(startRay);
 
         for (final Ray2d ray : rays) {
@@ -143,13 +142,13 @@ record Cave(
     }
 
     boolean isWithinGrid(final Point2d point) {
-        return 0 <= point.x() && point.x() < layout.values()[0].length
-                && 0 <= point.y() && point.y() < layout.values().length;
+        return 0 <= point.x() && point.x() < layout.width()
+                && 0 <= point.y() && point.y() < layout.height();
     }
 
     long maxPossibleEnergizedTiles() {
-        final int rows = layout.values().length;
-        final int columns = layout.values()[0].length;
+        final int rows = layout.height();
+        final int columns = layout.width();
 
         final List<Ray2d> rays = Stream.of(
                         IntStream.range(0, rows).mapToObj(i -> Ray.of(Point.of(-1, i), Vector.RIGHT)),
