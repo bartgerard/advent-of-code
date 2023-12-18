@@ -20,8 +20,6 @@ import static java.util.Collections.emptySet;
  * F is a 90-degree bend connecting south and east.
  * . is ground; there is no pipe in this tile.
  * S is the starting position of the animal; there is a pipe on this tile, but your sketch doesn't show what shape the pipe has.
- *
- * @param directions
  */
 enum TileType {
 

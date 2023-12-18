@@ -4,7 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -35,9 +36,9 @@ public record Lines<T>(
     }
 
     public static Lines<String> fromUrl(final String url) {
-        try (final InputStream is = new URL(url).openStream()) {
+        try (final InputStream is = new URI(url).toURL().openStream()) {
             return toLines(is);
-        } catch (final IOException e) {
+        } catch (final IOException | URISyntaxException e) {
             throw new IllegalArgumentException("url is invalid", e);
         }
     }
@@ -111,7 +112,7 @@ public record Lines<T>(
     }
 
     public T first() {
-        return values.get(0);
+        return values.getFirst();
     }
 
     public List<T> nonFirst() {
@@ -121,6 +122,6 @@ public record Lines<T>(
     }
 
     public T last() {
-        return values.get(values.size() - 1);
+        return values.getLast();
     }
 }

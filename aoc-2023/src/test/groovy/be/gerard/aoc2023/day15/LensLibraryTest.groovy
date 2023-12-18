@@ -50,7 +50,7 @@ class LensLibraryTest extends Specification {
     def "focussing power of the resulting lens configuration"() {
         when:
         final LensLibrary library = LensLibrary.parse(lines)
-        final int focussingPower = library.focussingPower();
+        final int focussingPower = library.focussingPower()
 
         then:
         focussingPower == expectedResult

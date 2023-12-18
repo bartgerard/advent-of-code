@@ -30,7 +30,7 @@ record Cosmos(
 
         return new Cosmos(
                 galaxies,
-                Point.of(rows.get(0).length(), rows.size())
+                Point.of(rows.getFirst().length(), rows.size())
         );
     }
 

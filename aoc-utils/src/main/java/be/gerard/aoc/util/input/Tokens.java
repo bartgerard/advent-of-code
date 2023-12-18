@@ -50,11 +50,11 @@ public record Tokens<T>(
     }
 
     public T first() {
-        return values.get(0);
+        return values.getFirst();
     }
 
     public T last() {
-        return values.get(values.size() - 1);
+        return values.getLast();
     }
 
     public Tokens<T> firstAndLast() {

@@ -1,7 +1,7 @@
 package be.gerard.aoc2023.day13;
 
-import be.gerard.aoc.util.matrix.IntMatrix;
 import be.gerard.aoc.util.input.Lines;
+import be.gerard.aoc.util.matrix.IntMatrix;
 import be.gerard.aoc.util.matrix.Matrix;
 
 import java.util.Arrays;
@@ -11,8 +11,8 @@ import java.util.stream.IntStream;
 record Mirrors(
         List<IntMatrix> patterns
 ) {
-    private static final char ASH = '.';
-    private static final char ROCKS = '#';
+    public static final char ASH = '.';
+    public static final char ROCKS = '#';
 
     static Mirrors parse(final Lines<String> lines) {
         final List<IntMatrix> patterns = lines.splitBy(String::isBlank)

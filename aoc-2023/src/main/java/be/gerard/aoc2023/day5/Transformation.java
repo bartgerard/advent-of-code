@@ -82,7 +82,7 @@ public record Transformation(
             return emptyList();
         }
 
-        List<Transformation> result = new ArrayList<>(consecutiveTransformations.get(0));
+        List<Transformation> result = new ArrayList<>(consecutiveTransformations.getFirst());
 
         for (int i = 1; i < consecutiveTransformations.size(); i++) {
             final Collection<Transformation> current = consecutiveTransformations.get(i);
