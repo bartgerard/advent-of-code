@@ -1,10 +1,14 @@
 package be.gerard.aoc.util.spatial;
 
+import java.util.List;
+
 public enum Direction {
     UP,
     RIGHT,
     DOWN,
     LEFT;
+
+    public static final List<Direction> ORTHOGONAL_DIRECTIONS = List.of(UP, DOWN, LEFT, RIGHT);
 
     public static Direction parse(final String value) {
         return switch (value) {

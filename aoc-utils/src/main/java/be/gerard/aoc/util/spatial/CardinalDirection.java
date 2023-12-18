@@ -14,4 +14,13 @@ public enum CardinalDirection {
             case WEST -> EAST;
         };
     }
+
+    public Direction asDirection() {
+        return switch (this) {
+            case NORTH -> Direction.UP;
+            case EAST -> Direction.RIGHT;
+            case SOUTH -> Direction.DOWN;
+            case WEST -> Direction.LEFT;
+        };
+    }
 }

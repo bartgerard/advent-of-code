@@ -4,117 +4,116 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptyList;
 import static org.apache.commons.lang3.Validate.isTrue;
 import static org.apache.commons.lang3.Validate.notEmpty;
 
-public record LongRange(
-        long fromInclusive,
-        long toInclusive
+public record IntRange(
+        int fromInclusive,
+        int toInclusive
 ) {
-    public LongRange {
+    public IntRange {
         isTrue(fromInclusive <= toInclusive);
     }
 
-    public static List<LongRange> parse(final Collection<String> values) {
+    public static List<IntRange> parse(final Collection<String> values) {
         return values.stream()
-                .map(LongRange::parse)
+                .map(IntRange::parse)
                 .toList();
     }
 
-    public static LongRange parse(final String value) {
+    public static IntRange parse(final String value) {
         notEmpty(value);
 
-        final String[] longs = value.split("\\.\\.");
+        final String[] ints = value.split("\\.\\.");
 
-        if (longs.length == 1) {
-            final long from = Long.parseLong(longs[0]);
+        if (ints.length == 1) {
+            final int from = Integer.parseInt(ints[0]);
             return value.contains("..")
-                    ? LongRange.of(from, Long.MAX_VALUE)
-                    : LongRange.of(from, from);
-        } else if (longs.length == 2) {
-            return LongRange.of(
-                    Long.parseLong(longs[0]),
-                    Long.parseLong(longs[1])
+                    ? IntRange.of(from, Integer.MAX_VALUE)
+                    : IntRange.of(from, from);
+        } else if (ints.length == 2) {
+            return IntRange.of(
+                    Integer.parseInt(ints[0]),
+                    Integer.parseInt(ints[1])
             );
         } else {
             throw new IllegalArgumentException("The value is not a valid range [value=%s]".formatted(value));
         }
     }
 
-    public static LongRange of(
-            final long fromInclusive
+    public static IntRange of(
+            final int fromInclusive
     ) {
-        return new LongRange(fromInclusive, fromInclusive);
+        return new IntRange(fromInclusive, fromInclusive);
     }
 
-    public static LongRange of(
-            final long fromInclusive,
-            final long toInclusive
+    public static IntRange of(
+            final int fromInclusive,
+            final int toInclusive
     ) {
-        return new LongRange(fromInclusive, toInclusive);
+        return new IntRange(fromInclusive, toInclusive);
     }
 
-    public static LongRange between(
-            final long i,
-            final long j
+    public static IntRange between(
+            final int i,
+            final int j
     ) {
-        return LongRange.of(
-                Long.min(i, j),
-                Long.max(i, j)
+        return IntRange.of(
+                Integer.min(i, j),
+                Integer.max(i, j)
         );
     }
 
-    public static LongRange withLength(
-            long fromInclusive,
-            long length
+    public static IntRange withLength(
+            int fromInclusive,
+            int length
     ) {
-        return new LongRange(fromInclusive, fromInclusive + length - 1);
+        return new IntRange(fromInclusive, fromInclusive + length - 1);
     }
 
-    public static List<LongRange> allIntersections(
-            final Collection<LongRange> ranges
+    public static List<IntRange> allIntersections(
+            final Collection<IntRange> ranges
     ) {
         if (ranges.isEmpty()) {
             return emptyList();
         }
 
-        final List<Long> borders = Stream.concat(
+        final List<Integer> borders = Stream.concat(
                         ranges.stream()
-                                .map(LongRange::fromInclusive),
+                                .map(IntRange::fromInclusive),
                         ranges.stream()
-                                .map(LongRange::toExclusive)
+                                .map(IntRange::toExclusive)
                 )
                 .distinct()
                 .sorted()
                 .toList();
 
         if (borders.size() == 1) {
-            return List.of(LongRange.of(borders.getFirst()));
+            return List.of(IntRange.of(borders.getFirst()));
         }
 
         return IntStream.range(1, borders.size())
-                .mapToObj(i -> LongRange.of(
+                .mapToObj(i -> IntRange.of(
                         borders.get(i - 1),
                         borders.get(i) - 1
                 ))
                 .toList();
     }
 
-    public static List<LongRange> usedIntersections(
-            final Collection<LongRange> ranges
+    public static List<IntRange> usedIntersections(
+            final Collection<IntRange> ranges
     ) {
         return usedIntersections(ranges, ranges);
     }
 
-    public static List<LongRange> usedIntersections(
-            final Collection<LongRange> allRanges,
-            final Collection<LongRange> usedByRanges
+    public static List<IntRange> usedIntersections(
+            final Collection<IntRange> allRanges,
+            final Collection<IntRange> usedByRanges
     ) {
-        final List<LongRange> allIntersections = allIntersections(allRanges);
+        final List<IntRange> allIntersections = allIntersections(allRanges);
 
         return allIntersections.stream()
                 .filter(intersection -> usedByRanges.stream()
@@ -123,10 +122,10 @@ public record LongRange(
                 .toList();
     }
 
-    public static List<LongRange> allGaps(
-            final Collection<LongRange> ranges
+    public static List<IntRange> allGaps(
+            final Collection<IntRange> ranges
     ) {
-        final List<LongRange> sortedIntersections = usedIntersections(ranges);
+        final List<IntRange> sortedIntersections = usedIntersections(ranges);
 
         if (sortedIntersections.size() <= 1) {
             return emptyList();
@@ -134,17 +133,17 @@ public record LongRange(
 
         return IntStream.range(1, sortedIntersections.size())
                 .filter(i -> sortedIntersections.get(i - 1).toExclusive() != sortedIntersections.get(i).fromInclusive())
-                .mapToObj(i -> LongRange.of(
+                .mapToObj(i -> IntRange.of(
                         sortedIntersections.get(i - 1).toExclusive(),
                         sortedIntersections.get(i).fromExclusive()
                 ))
                 .toList();
     }
 
-    public static List<LongRange> merge(
-            final Collection<LongRange> ranges
+    public static List<IntRange> merge(
+            final Collection<IntRange> ranges
     ) {
-        final List<LongRange> sortedIntersections = usedIntersections(ranges);
+        final List<IntRange> sortedIntersections = usedIntersections(ranges);
 
         if (sortedIntersections.isEmpty()) {
             return emptyList();
@@ -164,70 +163,70 @@ public record LongRange(
                 .toArray();
 
         return IntStream.range(1, borders.length)
-                .mapToObj(i -> LongRange.of(
+                .mapToObj(i -> IntRange.of(
                         sortedIntersections.get(borders[i - 1]).fromInclusive(),
                         sortedIntersections.get(borders[i] - 1).toInclusive()
                 ))
                 .toList();
     }
 
-    public long fromExclusive() {
+    public int fromExclusive() {
         return fromInclusive - 1;
     }
 
-    public long toExclusive() {
+    public int toExclusive() {
         return toInclusive + 1;
     }
 
-    public LongStream unroll() {
-        return LongStream.range(fromInclusive, toInclusive + 1);
+    public IntStream unroll() {
+        return IntStream.range(fromInclusive, toInclusive + 1);
     }
 
-    public List<Long> toList() {
+    public List<Integer> toList() {
         return unroll().boxed().toList();
     }
 
-    public boolean contains(final long value) {
+    public boolean contains(final int value) {
         return fromInclusive <= value && value <= toInclusive;
     }
 
-    public boolean contains(final LongRange range) {
+    public boolean contains(final IntRange range) {
         return fromInclusive <= range.fromInclusive() && range.toInclusive() <= toInclusive;
     }
 
-    public boolean overlaps(final LongRange range) {
+    public boolean overlaps(final IntRange range) {
         return fromInclusive <= range.toInclusive() && range.fromInclusive() <= toInclusive;
     }
 
-    public LongRange intersect(final LongRange range) {
+    public IntRange intersect(final IntRange range) {
         isTrue(overlaps(range));
 
-        return LongRange.of(
-                Long.max(fromInclusive, range.fromInclusive()),
-                Long.min(toInclusive, range.toInclusive())
+        return IntRange.of(
+                Integer.max(fromInclusive, range.fromInclusive()),
+                Integer.min(toInclusive, range.toInclusive())
         );
     }
 
-    public LongRange plus(final long value) {
-        return LongRange.of(
+    public IntRange plus(final int value) {
+        return IntRange.of(
                 fromInclusive + value,
                 toInclusive + value
         );
     }
 
-    public LongRange min(final long value) {
+    public IntRange min(final int value) {
         return plus(-value);
     }
 
-    public long length() {
+    public int length() {
         return toInclusive - fromInclusive + 1;
     }
 
     @Override
     public String toString() {
         if (fromInclusive == toInclusive) {
-            return Long.toString(fromInclusive);
-        } else if (toInclusive < Long.MAX_VALUE) {
+            return Integer.toString(fromInclusive);
+        } else if (toInclusive < Integer.MAX_VALUE) {
             return "%s..%s".formatted(fromInclusive, toInclusive);
         } else {
             return "%s..".formatted(fromInclusive);

@@ -1,10 +1,5 @@
 package be.gerard.aoc2023.day10;
 
-
-// OUT     IN  | OUT     OUT | OUT     IN
-//      X      |      X      |      X
-// OUT     IN  | OUT     IN  | OUT     OUT
-
 import be.gerard.aoc.util.spatial.CardinalDirection;
 
 import java.util.Objects;
@@ -12,6 +7,10 @@ import java.util.Set;
 
 import static be.gerard.aoc2023.day10.Corners.State.IN;
 import static be.gerard.aoc2023.day10.Corners.State.OUT;
+
+// OUT     IN  | OUT     OUT | OUT     IN
+//      X      |      X      |      X
+// OUT     IN  | OUT     IN  | OUT     OUT
 
 // IN      OUT | IN      OUT | IN      IN
 //      X      |      X      |      X
@@ -45,18 +44,16 @@ record Corners(
         } else if (Objects.equals(this, OUTSIDE)) {
             return TileState.OUTSIDE;
         } else {
-            return TileState.LOOP;
+            return TileState.EDGE;
         }
     }
 
-    Corners whenMovingTo(final TileType tileType) {
-        final Set<CardinalDirection> directions = tileType.directions();
-
+    Corners whenCrossing(final Set<CardinalDirection> lineDirections) {
         return new Corners(
                 upperRight,
-                directions.contains(CardinalDirection.NORTH) ? upperRight.inverse() : upperRight,
+                lineDirections.contains(CardinalDirection.NORTH) ? upperRight.inverse() : upperRight,
                 lowerRight,
-                directions.contains(CardinalDirection.SOUTH) ? lowerRight.inverse() : lowerRight
+                lineDirections.contains(CardinalDirection.SOUTH) ? lowerRight.inverse() : lowerRight
         );
     }
 

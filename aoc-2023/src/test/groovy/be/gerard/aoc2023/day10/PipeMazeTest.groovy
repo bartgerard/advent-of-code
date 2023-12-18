@@ -49,7 +49,7 @@ class PipeMazeTest extends Specification {
 
     def "change of corners when moving to the next tile"() {
         when:
-        final Corners current = previous.whenMovingTo(tileType)
+        final Corners current = previous.whenCrossing(tileType.directions())
 
         then:
         assertThat(current).isEqualTo(expectedCorners)

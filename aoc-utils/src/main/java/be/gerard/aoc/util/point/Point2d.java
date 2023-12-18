@@ -8,7 +8,7 @@ public record Point2d(
         int x,
         int y
 ) implements Point {
-    public static int manhattanDistanceBetween(
+    public static long manhattanDistanceBetween(
             final Point2d p1,
             final Point2d p2
     ) {

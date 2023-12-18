@@ -139,7 +139,7 @@ record PipeMaze(
                 final boolean isLoop = loopTiles.contains(point);
                 final TileType tileType = isLoop ? tiles[y][x] : TileType.GROUND;
 
-                final Corners current = previous.whenMovingTo(tileType);
+                final Corners current = previous.whenCrossing(tileType.directions());
                 previous = current;
 
                 states[y][x] = current.toTileState();
