@@ -1,14 +1,14 @@
 package be.gerard.aoc2023.day10;
 
-import be.gerard.aoc.util.CardinalDirection;
+import be.gerard.aoc.util.spatial.CardinalDirection;
 
 import java.util.Arrays;
 import java.util.Set;
 
-import static be.gerard.aoc.util.CardinalDirection.EAST;
-import static be.gerard.aoc.util.CardinalDirection.NORTH;
-import static be.gerard.aoc.util.CardinalDirection.SOUTH;
-import static be.gerard.aoc.util.CardinalDirection.WEST;
+import static be.gerard.aoc.util.spatial.CardinalDirection.EAST;
+import static be.gerard.aoc.util.spatial.CardinalDirection.NORTH;
+import static be.gerard.aoc.util.spatial.CardinalDirection.SOUTH;
+import static be.gerard.aoc.util.spatial.CardinalDirection.WEST;
 import static java.util.Collections.emptySet;
 
 /**

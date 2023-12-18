@@ -1,6 +1,6 @@
 package be.gerard.aoc.util
 
-
+import be.gerard.aoc.util.math.LongRange
 import spock.lang.Specification
 
 import static org.assertj.core.api.Assertions.assertThat
@@ -16,7 +16,7 @@ class LongRangeTest extends Specification {
 
         where:
         range              | value | expectedResult | comment
-        LongRange.of(0)    | 0     | true           | ""
+        LongRange.of(0) | 0 | true | ""
         LongRange.of(0)    | 1     | false          | ""
         LongRange.of(0)    | -1    | false          | ""
 

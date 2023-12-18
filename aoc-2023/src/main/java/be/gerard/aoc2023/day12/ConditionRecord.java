@@ -1,6 +1,6 @@
 package be.gerard.aoc2023.day12;
 
-import be.gerard.aoc.util.Tokens;
+import be.gerard.aoc.util.input.Tokens;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
 import java.util.Arrays;

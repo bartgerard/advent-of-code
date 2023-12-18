@@ -1,5 +1,6 @@
 package be.gerard.aoc.util
 
+import be.gerard.aoc.util.math.Numbers
 import spock.lang.Specification
 
 class NumbersTest extends Specification {

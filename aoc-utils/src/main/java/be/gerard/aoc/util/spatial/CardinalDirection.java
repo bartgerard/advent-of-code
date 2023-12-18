@@ -1,4 +1,4 @@
-package be.gerard.aoc.util;
+package be.gerard.aoc.util.spatial;
 
 public enum CardinalDirection {
     NORTH,

@@ -1,12 +1,12 @@
 package be.gerard.aoc2023.day16
 
-import be.gerard.aoc.util.Point
-import be.gerard.aoc.util.Ray
-import be.gerard.aoc.util.Ray2d
-import be.gerard.aoc.util.Vector
+import be.gerard.aoc.util.point.Point
+import be.gerard.aoc.util.vector.Ray
+import be.gerard.aoc.util.vector.Ray2d
+import be.gerard.aoc.util.vector.Vector
 import spock.lang.Specification
 
-import static be.gerard.aoc.util.Lines.fromFile
+import static be.gerard.aoc.util.input.Lines.fromFile
 
 class CaveTest extends Specification {
 

@@ -1,8 +1,8 @@
 package be.gerard.aoc2023.day8;
 
-import be.gerard.aoc.util.Lines;
-import be.gerard.aoc.util.Numbers;
-import be.gerard.aoc.util.Tokens;
+import be.gerard.aoc.util.input.Lines;
+import be.gerard.aoc.util.math.Numbers;
+import be.gerard.aoc.util.input.Tokens;
 
 import java.util.List;
 import java.util.Map;

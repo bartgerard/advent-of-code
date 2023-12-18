@@ -3,7 +3,7 @@ package be.gerard.aoc2023.day10
 
 import spock.lang.Specification
 
-import static be.gerard.aoc.util.Lines.fromFile
+import static be.gerard.aoc.util.input.Lines.fromFile
 import static be.gerard.aoc2023.day10.Corners.State.IN
 import static be.gerard.aoc2023.day10.Corners.State.OUT
 import static org.assertj.core.api.Assertions.assertThat

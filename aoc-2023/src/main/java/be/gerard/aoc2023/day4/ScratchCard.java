@@ -1,9 +1,9 @@
 package be.gerard.aoc2023.day4;
 
-import be.gerard.aoc.util.Line;
-import be.gerard.aoc.util.Lines;
-import be.gerard.aoc.util.Numbers;
-import be.gerard.aoc.util.Tokens;
+import be.gerard.aoc.util.input.Line;
+import be.gerard.aoc.util.input.Lines;
+import be.gerard.aoc.util.math.Numbers;
+import be.gerard.aoc.util.input.Tokens;
 
 import java.util.Collection;
 import java.util.HashMap;

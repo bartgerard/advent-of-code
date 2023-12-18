@@ -1,6 +1,6 @@
 package be.gerard.aoc2023.day12;
 
-import be.gerard.aoc.util.Lines;
+import be.gerard.aoc.util.input.Lines;
 
 import java.util.List;
 

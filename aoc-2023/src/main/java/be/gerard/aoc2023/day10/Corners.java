@@ -5,7 +5,7 @@ package be.gerard.aoc2023.day10;
 //      X      |      X      |      X
 // OUT     IN  | OUT     IN  | OUT     OUT
 
-import be.gerard.aoc.util.CardinalDirection;
+import be.gerard.aoc.util.spatial.CardinalDirection;
 
 import java.util.Objects;
 import java.util.Set;

@@ -3,7 +3,7 @@ package be.gerard.aoc2023.day3
 
 import spock.lang.Specification
 
-import static be.gerard.aoc.util.Lines.fromFile
+import static be.gerard.aoc.util.input.Lines.fromFile
 
 class EngineSchematicTest extends Specification {
 

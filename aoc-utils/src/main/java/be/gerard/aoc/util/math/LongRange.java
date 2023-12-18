@@ -1,4 +1,4 @@
-package be.gerard.aoc.util;
+package be.gerard.aoc.util.math;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -83,7 +83,7 @@ public record LongRange(
                 .toList();
 
         if (borders.size() == 1) {
-            return List.of(LongRange.of(borders.get(0)));
+            return List.of(LongRange.of(borders.getFirst()));
         }
 
         return IntStream.range(1, borders.size())
@@ -139,7 +139,7 @@ public record LongRange(
         if (sortedIntersections.isEmpty()) {
             return emptyList();
         } else if (sortedIntersections.size() == 1) {
-            return List.of(sortedIntersections.get(0));
+            return List.of(sortedIntersections.getFirst());
         }
 
         final int[] nonConsecutiveIndices = IntStream.range(1, sortedIntersections.size())

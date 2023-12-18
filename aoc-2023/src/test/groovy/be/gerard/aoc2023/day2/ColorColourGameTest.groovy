@@ -1,10 +1,10 @@
 package be.gerard.aoc2023.day2
 
-import be.gerard.aoc.util.Line
-import be.gerard.aoc.util.Lines
+import be.gerard.aoc.util.input.Line
+import be.gerard.aoc.util.input.Lines
 import spock.lang.Specification
 
-import static be.gerard.aoc.util.Lines.fromFile
+import static be.gerard.aoc.util.input.Lines.fromFile
 
 class ColorColourGameTest extends Specification {
 

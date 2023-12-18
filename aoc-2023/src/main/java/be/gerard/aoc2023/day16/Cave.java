@@ -1,14 +1,14 @@
 package be.gerard.aoc2023.day16;
 
-import be.gerard.aoc.util.CharMatrix;
-import be.gerard.aoc.util.Lines;
-import be.gerard.aoc.util.Matrix;
-import be.gerard.aoc.util.Point;
-import be.gerard.aoc.util.Point2d;
-import be.gerard.aoc.util.Ray;
-import be.gerard.aoc.util.Ray2d;
-import be.gerard.aoc.util.Vector;
-import be.gerard.aoc.util.Vector2d;
+import be.gerard.aoc.util.matrix.CharMatrix;
+import be.gerard.aoc.util.input.Lines;
+import be.gerard.aoc.util.matrix.Matrix;
+import be.gerard.aoc.util.point.Point;
+import be.gerard.aoc.util.point.Point2d;
+import be.gerard.aoc.util.vector.Ray;
+import be.gerard.aoc.util.vector.Ray2d;
+import be.gerard.aoc.util.vector.Vector;
+import be.gerard.aoc.util.vector.Vector2d;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -151,16 +151,11 @@ record Cave(
         final int rows = layout.values().length;
         final int columns = layout.values()[0].length;
 
-        final Vector2d right = Vector.of(1, 0);
-        final Vector2d down = Vector.of(0, 1);
-        final Vector2d left = Vector.of(-1, 0);
-        final Vector2d up = Vector.of(0, -1);
-
         final List<Ray2d> rays = Stream.of(
-                        IntStream.range(0, rows).mapToObj(i -> Ray.of(Point.of(-1, i), right)),
-                        IntStream.range(0, rows).mapToObj(i -> Ray.of(Point.of(columns, i), left)),
-                        IntStream.range(0, columns).mapToObj(i -> Ray.of(Point.of(i, -1), down)),
-                        IntStream.range(0, columns).mapToObj(i -> Ray.of(Point.of(i, columns), up))
+                        IntStream.range(0, rows).mapToObj(i -> Ray.of(Point.of(-1, i), Vector.RIGHT)),
+                        IntStream.range(0, rows).mapToObj(i -> Ray.of(Point.of(columns, i), Vector.LEFT)),
+                        IntStream.range(0, columns).mapToObj(i -> Ray.of(Point.of(i, -1), Vector.DOWN)),
+                        IntStream.range(0, columns).mapToObj(i -> Ray.of(Point.of(i, columns), Vector.UP))
                 )
                 .flatMap(identity())
                 .toList();

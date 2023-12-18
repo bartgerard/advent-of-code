@@ -1,6 +1,6 @@
 package be.gerard.aoc2023.day6;
 
-import be.gerard.aoc.util.LongRange;
+import be.gerard.aoc.util.math.LongRange;
 
 import java.util.stream.LongStream;
 

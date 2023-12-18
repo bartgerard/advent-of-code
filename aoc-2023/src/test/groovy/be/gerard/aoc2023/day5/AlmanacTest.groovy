@@ -2,7 +2,7 @@ package be.gerard.aoc2023.day5
 
 import spock.lang.Specification
 
-import static be.gerard.aoc.util.Lines.fromFile
+import static be.gerard.aoc.util.input.Lines.fromFile
 
 class AlmanacTest extends Specification {
 

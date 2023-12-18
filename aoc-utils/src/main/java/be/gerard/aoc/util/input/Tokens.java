@@ -1,4 +1,4 @@
-package be.gerard.aoc.util;
+package be.gerard.aoc.util.input;
 
 import java.util.Arrays;
 import java.util.List;

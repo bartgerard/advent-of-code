@@ -1,10 +1,10 @@
 package be.gerard.aoc2023.day1
 
-import be.gerard.aoc.util.Line
-import be.gerard.aoc.util.Numbers
+import be.gerard.aoc.util.input.Line
+import be.gerard.aoc.util.math.Numbers
 import spock.lang.Specification
 
-import static be.gerard.aoc.util.Lines.fromFile
+import static be.gerard.aoc.util.input.Lines.fromFile
 
 class CalibrationValueTest extends Specification {
 

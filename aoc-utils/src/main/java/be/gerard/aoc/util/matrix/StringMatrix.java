@@ -1,4 +1,4 @@
-package be.gerard.aoc.util;
+package be.gerard.aoc.util.matrix;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +18,17 @@ public record StringMatrix(
         final String[] values = rows.toArray(String[]::new);
 
         return new StringMatrix(values);
+    }
+
+
+    @Override
+    public int width() {
+        return rows[0].length();
+    }
+
+    @Override
+    public int height() {
+        return rows.length;
     }
 
     public StringMatrix transpose() {

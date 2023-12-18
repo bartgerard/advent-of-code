@@ -1,7 +1,7 @@
 package be.gerard.aoc2023.day14;
 
-import be.gerard.aoc.util.Lines;
-import be.gerard.aoc.util.StringMatrix;
+import be.gerard.aoc.util.input.Lines;
+import be.gerard.aoc.util.matrix.StringMatrix;
 
 import java.util.ArrayList;
 import java.util.Arrays;

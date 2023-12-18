@@ -3,7 +3,7 @@ package be.gerard.aoc2023.day11
 
 import spock.lang.Specification
 
-import static be.gerard.aoc.util.Lines.fromFile
+import static be.gerard.aoc.util.input.Lines.fromFile
 
 class CosmosTest extends Specification {
 

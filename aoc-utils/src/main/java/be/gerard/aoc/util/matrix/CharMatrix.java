@@ -1,4 +1,6 @@
-package be.gerard.aoc.util;
+package be.gerard.aoc.util.matrix;
+
+import be.gerard.aoc.util.point.Point2d;
 
 import java.util.Arrays;
 import java.util.function.IntUnaryOperator;
@@ -19,6 +21,23 @@ public record CharMatrix(
 
     public char at(final Point2d point) {
         return values[point.y()][point.x()];
+    }
+
+    public void set(
+            final Point2d point,
+            final char value
+    ) {
+        values[point.y()][point.x()] = value;
+    }
+
+    @Override
+    public int width() {
+        return values[0].length;
+    }
+
+    @Override
+    public int height() {
+        return values.length;
     }
 
     @Override
