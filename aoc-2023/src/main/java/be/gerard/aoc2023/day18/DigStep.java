@@ -36,7 +36,7 @@ public record DigStep(
             case "0" -> RIGHT;
             case "1" -> DOWN;
             case "2" -> LEFT;
-            default-> throw new IllegalArgumentException("invalid direction [%s]".formatted(hexadecimalDirection));
+            default -> throw new IllegalArgumentException("invalid direction [%s]".formatted(hexadecimalDirection));
         };
 
         return new DigStep(

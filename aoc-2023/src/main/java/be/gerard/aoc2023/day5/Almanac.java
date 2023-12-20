@@ -1,8 +1,8 @@
 package be.gerard.aoc2023.day5;
 
 import be.gerard.aoc.util.input.Lines;
-import be.gerard.aoc.util.math.LongRange;
 import be.gerard.aoc.util.input.Tokens;
+import be.gerard.aoc.util.math.LongRange;
 
 import java.util.Collections;
 import java.util.List;
@@ -45,7 +45,7 @@ public record Almanac(
             final Function<String, List<LongRange>> seedFunction
     ) {
         final Lines<Lines<String>> lineGroups = lines.splitBy(String::isBlank);
-        final List<LongRange> seeds = seedFunction.apply(lineGroups.first().first());
+        final List<LongRange> seeds = seedFunction.apply(lineGroups.getFirst().getFirst());
         final List<CategoryMap> mapping = lineGroups.nonFirst()
                 .stream()
                 .map(CategoryMap::parse)

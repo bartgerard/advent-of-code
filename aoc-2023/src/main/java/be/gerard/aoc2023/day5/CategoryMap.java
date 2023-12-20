@@ -15,7 +15,7 @@ public record CategoryMap(
     public static final Pattern CATEGORY_MAPPING_PATTERN = Pattern.compile("(\\S*)-to-(\\S*)");
 
     public static CategoryMap parse(final Lines<String> lines) {
-        final List<String> categories = Tokens.tokenize(lines.first(), CATEGORY_MAPPING_PATTERN);
+        final List<String> categories = Tokens.tokenize(lines.getFirst(), CATEGORY_MAPPING_PATTERN);
         final List<Transformation> transformations = lines.nonFirst()
                 .stream()
                 .map(Transformation::parse)

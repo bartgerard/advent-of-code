@@ -111,7 +111,7 @@ public record Lines<T>(
                 ));
     }
 
-    public T first() {
+    public T getFirst() {
         return values.getFirst();
     }
 
@@ -121,7 +121,7 @@ public record Lines<T>(
                 .toList();
     }
 
-    public T last() {
+    public T getLast() {
         return values.getLast();
     }
 }

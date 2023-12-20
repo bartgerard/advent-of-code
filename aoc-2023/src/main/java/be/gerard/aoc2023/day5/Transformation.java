@@ -1,8 +1,8 @@
 package be.gerard.aoc2023.day5;
 
 
-import be.gerard.aoc.util.math.LongRange;
 import be.gerard.aoc.util.input.Tokens;
+import be.gerard.aoc.util.math.LongRange;
 
 import java.util.ArrayList;
 import java.util.Collection;

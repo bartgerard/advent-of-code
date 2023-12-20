@@ -2,7 +2,6 @@ package be.gerard.aoc2023.day18;
 
 import be.gerard.aoc.util.input.Lines;
 import be.gerard.aoc.util.math.Line;
-import be.gerard.aoc.util.matrix.FiniteGrid;
 import be.gerard.aoc.util.matrix.InfiniteGrid;
 import be.gerard.aoc.util.point.Point;
 import be.gerard.aoc.util.point.Point2d;

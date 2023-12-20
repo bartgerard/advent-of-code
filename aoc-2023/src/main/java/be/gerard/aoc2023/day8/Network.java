@@ -1,8 +1,8 @@
 package be.gerard.aoc2023.day8;
 
 import be.gerard.aoc.util.input.Lines;
-import be.gerard.aoc.util.math.Numbers;
 import be.gerard.aoc.util.input.Tokens;
+import be.gerard.aoc.util.math.Numbers;
 
 import java.util.List;
 import java.util.Map;
@@ -36,12 +36,12 @@ record Network(
     static Network parse(final Lines<String> lines) {
         final Lines<Lines<String>> groups = lines.splitBy(String::isBlank);
 
-        final String path = groups.first().first();
+        final String path = groups.getFirst().getFirst();
         final List<Direction> directions = path.chars()
                 .mapToObj(Direction::parse)
                 .toList();
 
-        return groups.last()
+        return groups.getLast()
                 .map(line -> {
                     final List<String> tokens = Tokens.tokenize(line, PATTERN);
 

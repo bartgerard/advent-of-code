@@ -10,8 +10,8 @@ record ToyBoatRace(
         List<Lap> laps
 ) {
     static ToyBoatRace parse(final Lines<String> lines) {
-        final List<Long> times = Tokens.asNumbers(lines.first());
-        final List<Long> distances = Tokens.asNumbers(lines.last());
+        final List<Long> times = Tokens.asNumbers(lines.getFirst());
+        final List<Long> distances = Tokens.asNumbers(lines.getLast());
 
         return new ToyBoatRace(IntStream.range(0, times.size())
                 .mapToObj(i -> new Lap(

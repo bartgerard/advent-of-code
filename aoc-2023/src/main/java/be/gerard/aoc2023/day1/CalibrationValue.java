@@ -3,8 +3,8 @@ package be.gerard.aoc2023.day1;
 
 import be.gerard.aoc.util.input.Line;
 import be.gerard.aoc.util.input.Lines;
-import be.gerard.aoc.util.math.Numbers;
 import be.gerard.aoc.util.input.Tokens;
+import be.gerard.aoc.util.math.Numbers;
 
 public record CalibrationValue(
         int value

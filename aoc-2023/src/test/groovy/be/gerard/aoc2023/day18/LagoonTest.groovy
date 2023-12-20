@@ -35,6 +35,6 @@ class LagoonTest extends Specification {
         where:
         lines                   | expectedResult | comment
         fromFile("day18/a.txt") | 952408144115   | ""
-        fromFile("day18/b.txt") | 48652          | ""
+        fromFile("day18/b.txt") | 45757884535661 | ""
     }
 }

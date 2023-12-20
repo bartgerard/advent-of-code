@@ -22,7 +22,7 @@ record LensLibrary(
                 .mapToObj(Box::withNumber)
                 .toArray(Box[]::new);
 
-        final List<String> values = Tokens.split(lines.first(), ",");
+        final List<String> values = Tokens.split(lines.getFirst(), ",");
 
         for (final String value : values) {
             final String[] split = value.split(DASH_OR_EQUALS);
@@ -51,7 +51,7 @@ record LensLibrary(
     }
 
     static int sumOfHashes(final Lines<String> lines) {
-        return Tokens.split(lines.first(), ",").stream()
+        return Tokens.split(lines.getFirst(), ",").stream()
                 .mapToInt(Hash::hash)
                 .sum();
     }
