@@ -35,7 +35,7 @@ record Cave(
 
 
     long countEnergizedTiles(final Ray2d startRay) {
-        final int[][] tiles = new int[layout.height()][layout.width()];
+        final int[][] tiles = new int[layout.regionHeight()][layout.regionWidth()];
         final Set<Ray2d> rays = raysStartingFrom(startRay);
 
         for (final Ray2d ray : rays) {
@@ -143,13 +143,13 @@ record Cave(
     }
 
     boolean isWithinGrid(final Point2d point) {
-        return 0 <= point.x() && point.x() < layout.width()
-                && 0 <= point.y() && point.y() < layout.height();
+        return 0 <= point.x() && point.x() < layout.regionWidth()
+                && 0 <= point.y() && point.y() < layout.regionHeight();
     }
 
     long maxPossibleEnergizedTiles() {
-        final int rows = layout.height();
-        final int columns = layout.width();
+        final int rows = layout.regionHeight();
+        final int columns = layout.regionWidth();
 
         final List<Ray2d> rays = Stream.of(
                         IntStream.range(0, rows).mapToObj(i -> Ray.of(Point.of(-1, i), Vector.RIGHT)),

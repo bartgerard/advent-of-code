@@ -1,6 +1,7 @@
 package be.gerard.aoc2023.day20;
 
 import be.gerard.aoc.util.input.Lines;
+import be.gerard.aoc.util.math.Numbers;
 import be.gerard.aoc.util.signal.Pulse;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -18,8 +19,11 @@ import java.util.stream.Collectors;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Objects.isNull;
 import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.partitioningBy;
+import static java.util.stream.Collectors.reducing;
 import static java.util.stream.Collectors.toUnmodifiableMap;
 import static java.util.stream.Collectors.toUnmodifiableSet;
+import static org.apache.commons.lang3.Validate.notNull;
 
 public record PulseModules(
         Map<String, PulseModule> modules
@@ -93,23 +97,70 @@ public record PulseModules(
         return modules.get(moduleName);
     }
 
-    int numberOfPushesRequiredForModuleToReceive(
-            final String destination,
-            final long frequency,
-            final Pulse pulse
+    long numberOfPushesRequiredForModuleToReceivePulse(
+            final String moduleName,
+            final Pulse pulse,
+            final Map<String, Long> cache
     ) {
-        for (int i = 1; ; i++) {
-            final List<Signal> signals = press();
-
-            final long count = signals.stream()
-                    .filter(signal -> Objects.equals(signal.destination(), destination))
-                    .filter(signal -> signal.pulse() == pulse)
-                    .count();
-
-            if (count >= frequency) {
-                return i;
-            }
+        if (cache.containsKey(moduleName)) {
+            return cache.get(moduleName);
         }
+
+        final PulseModule module = modules.get(moduleName);
+        final List<PulseModule> inputModules = findModulesWithDestination(moduleName);
+
+        return switch (module) {
+            case PulseModule.Broadcast broadcast -> 1;
+            case PulseModule.Conjunction conjunction -> {
+                final long result;
+                if (inputModules.stream().allMatch(inputModule -> inputModule instanceof PulseModule.FlipFlop)) {
+                    result = inputModules.stream()
+                            .mapToLong(inputModule -> numberOfPushesRequiredForModuleToReceivePulse(
+                                    inputModule.moduleName(),
+                                    pulse,
+                                    cache
+                            ))
+                            .sum();
+                } else {
+                    final long[] inputs = inputModules.stream()
+                            .mapToLong(inputModule -> numberOfPushesRequiredForModuleToReceivePulse(
+                                    inputModule.moduleName(),
+                                    pulse,
+                                    cache
+                            ))
+                            .toArray();
+
+                    result = Numbers.lcm(inputs);
+                }
+                cache.put(moduleName, result);
+                yield result;
+            }
+            case PulseModule.FlipFlop flipFlop -> {
+                final int multiplier = pulse == Pulse.LOW ? 2 : 1;
+
+                if (inputModules.size() == 1) {
+                    yield multiplier * numberOfPushesRequiredForModuleToReceivePulse(
+                            inputModules.getFirst().moduleName(),
+                            Pulse.LOW,
+                            cache
+                    );
+                } else if (inputModules.size() == 2) {
+                    final Map<Boolean, PulseModule> moduleMap = inputModules.stream()
+                            .collect(partitioningBy(
+                                    inputModule -> inputModule.type() == PulseModule.Type.CONJUNCTION,
+                                    reducing(null, (x, y) -> y)
+                            ));
+                    final PulseModule conjunction = moduleMap.get(true);
+                    final PulseModule other = moduleMap.get(false);
+
+                    notNull(conjunction, "aaaah");
+
+                    yield multiplier * numberOfPushesRequiredForModuleToReceivePulse(other.moduleName(), Pulse.LOW, cache);
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            }
+        };
     }
 
     Map<String, Integer> distancesFor(final Set<PulseModule.Type> types) {
@@ -192,6 +243,15 @@ public record PulseModules(
         }
 
         return result;
+    }
+
+    private List<PulseModule> findModulesWithDestination(
+            final String destination
+    ) {
+        return modules.values()
+                .stream()
+                .filter(module -> module.destinations().contains(destination))
+                .toList();
     }
 
     private Set<String> findAllModulesDirectlyImpacting(

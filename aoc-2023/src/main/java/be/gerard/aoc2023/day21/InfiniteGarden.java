@@ -1,42 +1,39 @@
 package be.gerard.aoc2023.day21;
 
 import be.gerard.aoc.util.matrix.IntMatrix;
+import be.gerard.aoc.util.matrix.RegionIntMatrix;
 import be.gerard.aoc.util.point.Point2d;
-import be.gerard.aoc.util.spatial.Direction;
 import be.gerard.aoc.util.vector.Vector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
 record InfiniteGarden(
-        IntMatrix grid
+        IntMatrix grid,
+        RegionIntMatrix infiniteGrid
 ) {
-
-    long numberOfPlotsReachableAfter(final int steps) {
-        final Pattern pattern = cycle();
-        return 0;
+    InfiniteGarden(final IntMatrix grid) {
+        this(grid, region(grid));
     }
 
-    Pattern cycle() {
-        final List<Long> numberOfReachablePlotsByStep = new ArrayList<>();
+    private static RegionIntMatrix region(final IntMatrix grid) {
+        final IntMatrix[][] expanded = Garden.expand(grid);
 
-        int previousRemainingPlots = Integer.MAX_VALUE;
-        final List<Long> pattern = new ArrayList<>();
+        return RegionIntMatrix.of(expanded);
+    }
 
-        final Map<Direction, Integer> numberOfStepsToReachBorder = new HashMap<>();
+    long numberOfPlotsReachableAfter(final int steps) {
+        final RegionTracking regionTracking = cycle();
+        return regionTracking.extrapolate(steps);
+    }
+
+    RegionTracking cycle() {
+        final RegionTracking tracking = RegionTracking.of(infiniteGrid);
 
         for (int step = 1; ; step++) {
-            final int remainingPlots = grid.findAllPointsWithValue(-1).size();
-
-            long numberOfReachablePlots = 0;
-
-            final Set<Point2d> points = grid.findAllPointsWithValue(step - 1);
+            final Set<Point2d> points = infiniteGrid.findAllPointsWithValue(step - 1);
 
             final Set<Point2d> newPoints = points.stream()
                     .flatMap(point -> Vector.ORTHOGONAL_DIRECTIONS.stream()
@@ -44,49 +41,27 @@ record InfiniteGarden(
                     )
                     .collect(collectingAndThen(
                             toUnmodifiableSet(),
-                            grid::cycle
+                            infiniteGrid::cycle
                     ));
 
-            if (numberOfStepsToReachBorder.size() < 4) {
-                if (!numberOfStepsToReachBorder.containsKey(Direction.LEFT) && newPoints.stream().anyMatch(p -> p.x() == 0)) {
-                    numberOfStepsToReachBorder.put(Direction.LEFT, step);
-                }
-                if (!numberOfStepsToReachBorder.containsKey(Direction.RIGHT) && newPoints.stream().anyMatch(p -> p.x() == grid.width() - 1)) {
-                    numberOfStepsToReachBorder.put(Direction.RIGHT, step);
-                }
-                if (!numberOfStepsToReachBorder.containsKey(Direction.UP) && newPoints.stream().anyMatch(p -> p.y() == 0)) {
-                    numberOfStepsToReachBorder.put(Direction.UP, step);
-                }
-                if (!numberOfStepsToReachBorder.containsKey(Direction.DOWN) && newPoints.stream().anyMatch(p -> p.y() == grid.height() - 1)) {
-                    numberOfStepsToReachBorder.put(Direction.DOWN, step);
-                }
-            }
+            final long[] reachablePlotsByRegion = new long[9];
 
             for (final Point2d newPoint : newPoints) {
-                if (grid.cyclicAt(newPoint) < step) {
-                    grid.set(newPoint, step);
-                    numberOfReachablePlots++;
+                if (infiniteGrid.cyclicAt(newPoint) < step) {
+                    infiniteGrid.set(newPoint, step);
+                    final int regionId = infiniteGrid.regionIdFor(newPoint);
+                    reachablePlotsByRegion[regionId]++;
                 }
             }
 
-            numberOfReachablePlotsByStep.add(numberOfReachablePlots);
+            tracking.add(reachablePlotsByRegion);
 
-            if (remainingPlots >= previousRemainingPlots) {
-                pattern.add(numberOfReachablePlots);
-
-                if (pattern.contains(numberOfReachablePlots)) {
-                    break;
-                }
+            if (tracking.finished()) {// || newPoints.stream().anyMatch(p -> p.x() == 0)
+                break;
             }
-
-            previousRemainingPlots = remainingPlots;
         }
 
-        return new Pattern(
-                numberOfReachablePlotsByStep,
-                pattern,
-                numberOfStepsToReachBorder
-        );
+        return tracking;
     }
 
 }

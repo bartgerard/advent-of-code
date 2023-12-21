@@ -22,12 +22,12 @@ public record StringMatrix(
 
 
     @Override
-    public int width() {
+    public int regionWidth() {
         return rows[0].length();
     }
 
     @Override
-    public int height() {
+    public int regionHeight() {
         return rows.length;
     }
 

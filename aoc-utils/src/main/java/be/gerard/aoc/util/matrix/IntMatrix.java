@@ -10,10 +10,48 @@ import java.util.stream.IntStream;
 
 import static java.lang.Math.floorMod;
 import static java.util.stream.Collectors.toUnmodifiableSet;
+import static org.apache.commons.lang3.Validate.isTrue;
+import static org.apache.commons.lang3.Validate.notEmpty;
 
 public record IntMatrix(
         int[][] values
 ) implements Matrix {
+    public static IntMatrix of(final IntMatrix[][] matrices) {
+        notEmpty(matrices);
+        final IntMatrix first = matrices[0][0];
+        final int height = first.regionHeight();
+        final int width = first.regionWidth();
+
+        isTrue(IntStream.range(0, matrices.length)
+                .allMatch(i -> IntStream.range(0, matrices[i].length)
+                        .allMatch(j -> matrices[i][j].regionWidth() == width && matrices[i][j].regionHeight() == height)
+                )
+        );
+
+        final int[][] values = new int[height * matrices.length][width * matrices[0].length];
+
+        for (int i = 0; i < matrices.length; i++) {
+            for (int j = 0; j < matrices[i].length; j++) {
+                final IntMatrix matrix = matrices[i][j];
+
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++) {
+                        values[i * height + y][j * width + x] = matrix.at(y, x);
+                    }
+                }
+            }
+        }
+
+        return new IntMatrix(values);
+    }
+
+    public IntMatrix copy() {
+        final int[][] newValues = IntStream.range(0, regionHeight())
+                .mapToObj(y -> Arrays.copyOf(values[y], values[y].length))
+                .toArray(int[][]::new);
+        return new IntMatrix(newValues);
+    }
+
     public IntMatrix transpose() {
         final int columns = values[0].length;
 
@@ -27,12 +65,12 @@ public record IntMatrix(
     }
 
     @Override
-    public int width() {
+    public int regionWidth() {
         return values[0].length;
     }
 
     @Override
-    public int height() {
+    public int regionHeight() {
         return values.length;
     }
 
@@ -55,7 +93,7 @@ public record IntMatrix(
             final int row,
             final int column
     ) {
-        return values[floorMod(row, height())][floorMod(column, width())];
+        return at(floorMod(row, regionHeight()), floorMod(column, regionWidth()));
     }
 
     public void set(
@@ -66,9 +104,9 @@ public record IntMatrix(
     }
 
     public Set<Point2d> findAllPointsWithValue(final int value) {
-        return IntStream.range(0, height())
+        return IntStream.range(0, regionHeight())
                 .boxed()
-                .flatMap(y -> IntStream.range(0, width())
+                .flatMap(y -> IntStream.range(0, regionWidth())
                         .filter(x -> at(y, x) == value)
                         .mapToObj(x -> Point.of(x, y))
                 )
@@ -81,8 +119,8 @@ public record IntMatrix(
 
     public Point2d end() {
         return Point.of(
-                width() - 1,
-                height() - 1
+                regionWidth() - 1,
+                regionHeight() - 1
         );
     }
 
@@ -91,19 +129,23 @@ public record IntMatrix(
     }
 
     public boolean contains(final int value) {
-        return IntStream.range(0, height())
-                .anyMatch(y -> IntStream.range(0, width())
+        return IntStream.range(0, regionHeight())
+                .anyMatch(y -> IntStream.range(0, regionWidth())
                         .anyMatch(x -> at(y, x) == value)
                 );
     }
 
     public Set<Point2d> cycle(final Collection<Point2d> points) {
         return points.stream()
-                .map(point -> Point.of(
-                        floorMod(point.x(), width()),
-                        floorMod(point.y(), height())
-                ))
+                .map(this::cycle)
                 .collect(toUnmodifiableSet());
+    }
+
+    public Point2d cycle(final Point2d point) {
+        return Point.of(
+                floorMod(point.x(), regionWidth()),
+                floorMod(point.y(), regionHeight())
+        );
     }
 
     @Override

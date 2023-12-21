@@ -1,5 +1,6 @@
 package be.gerard.aoc2023.day20
 
+
 import be.gerard.aoc.util.signal.Pulse
 import spock.lang.Specification
 
@@ -39,22 +40,22 @@ class PulseModulesTest extends Specification {
     def "number of pushes until module rx receives a single low pulse"() {
         when:
         final PulseModules modules = PulseModules.parse(lines)
-        final int pushes = modules.numberOfPushesRequiredForModuleToReceive(moduleName, frequency, Pulse.LOW)
+        final long pushes = modules.numberOfPushesRequiredForModuleToReceivePulse(moduleName, Pulse.LOW, new HashMap<String, Long>())
 
         then:
         pushes == expectedResult
 
         where:
-        lines                       | moduleName | frequency | expectedResult | comment
-        fromFile("day20/input.txt") | "pp"       | 1         | 2              | ""
-        fromFile("day20/input.txt") | "rg"       | 1         | 2              | ""
-        fromFile("day20/input.txt") | "zp"       | 1         | 2              | ""
-        fromFile("day20/input.txt") | "sj"       | 1         | 2              | ""
-        fromFile("day20/input.txt") | "gp"       | 1         | 3833           | ""
-        fromFile("day20/input.txt") | "xp"       | 1         | 4057           | ""
-        fromFile("day20/input.txt") | "xl"       | 1         | 4051           | ""
-        fromFile("day20/input.txt") | "ln"       | 1         | 4021           | ""
-        fromFile("day20/input.txt") | "df"       | 1         | 4021           | ""
-        fromFile("day20/input.txt") | "rx"       | 1         | 1              | ""
+        lines                       | moduleName | expectedResult  | comment
+        fromFile("day20/input.txt") | "pp"       | 2               | ""
+        fromFile("day20/input.txt") | "rg"       | 2               | ""
+        fromFile("day20/input.txt") | "zp"       | 2               | ""
+        fromFile("day20/input.txt") | "sj"       | 2               | ""
+        fromFile("day20/input.txt") | "gp"       | 3833            | ""
+        fromFile("day20/input.txt") | "xp"       | 4057            | ""
+        fromFile("day20/input.txt") | "xl"       | 4051            | ""
+        fromFile("day20/input.txt") | "ln"       | 4021            | ""
+        fromFile("day20/input.txt") | "df"       | 4021            | ""
+        fromFile("day20/input.txt") | "rx"       | 253302889093151 | ""
     }
 }

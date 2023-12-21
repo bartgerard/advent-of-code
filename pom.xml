@@ -132,6 +132,13 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- jama - basic linear algebra -->
+            <dependency>
+                <groupId>gov.nist.math</groupId>
+                <artifactId>jama</artifactId>
+                <version>1.0.3</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
