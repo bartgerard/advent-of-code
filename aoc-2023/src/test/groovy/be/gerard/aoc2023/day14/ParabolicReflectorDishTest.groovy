@@ -15,10 +15,10 @@ class ParabolicReflectorDishTest extends Specification {
         totalLoad == expectedResult
 
         where:
-        lines                   | expectedResult | comment
-        fromFile("day14/a.txt") | 136            | ""
-        fromFile("day14/b.txt") | 136            | ""
-        fromFile("day14/c.txt") | 109345         | ""
+        lines                           | expectedResult | comment
+        fromFile("day14/example_1.txt") | 136            | ""
+        fromFile("day14/example_2.txt") | 136            | ""
+        fromFile("day14/input.txt")     | 109345         | ""
     }
 
     def "total load on the dish after spinning"() {
@@ -30,16 +30,16 @@ class ParabolicReflectorDishTest extends Specification {
         totalLoad == expectedResult
 
         where:
-        lines                   | cycles     | expectedResult | comment
-        fromFile("day14/a.txt") | 1000000000 | 64             | ""
-        fromFile("day14/b.txt") | 1000000000 | 64             | ""
-        fromFile("day14/c.txt") | 1000000000 | 112452         | ""
+        lines                           | cycles     | expectedResult | comment
+        fromFile("day14/example_1.txt") | 1000000000 | 64             | ""
+        fromFile("day14/example_2.txt") | 1000000000 | 64             | ""
 
-        fromFile("day14/d.txt") | 1          | 4              | ""
-        fromFile("day14/d.txt") | 2          | 2              | ""
-        fromFile("day14/d.txt") | 3          | 3              | ""
-        fromFile("day14/d.txt") | 4          | 4              | ""
-        fromFile("day14/d.txt") | 5          | 2              | ""
-        fromFile("day14/d.txt") | 6          | 3              | ""
+        fromFile("day14/extra_1.txt")   | 1          | 4              | ""
+        fromFile("day14/extra_1.txt")   | 2          | 2              | ""
+        fromFile("day14/extra_1.txt")   | 3          | 3              | ""
+        fromFile("day14/extra_1.txt")   | 4          | 4              | ""
+        fromFile("day14/extra_1.txt")   | 5          | 2              | ""
+        fromFile("day14/extra_1.txt")   | 6          | 3              | ""
+        fromFile("day14/input.txt")     | 1000000000 | 112452         | ""
     }
 }

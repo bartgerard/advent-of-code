@@ -16,14 +16,14 @@ class HotSpringsTest extends Specification {
         numberOfArrangements == expectedResult
 
         where:
-        lines                   | unfoldFactor | expectedResult | comment
-        fromFile("day12/a.txt") | 1            | 6              | ""
-        fromFile("day12/b.txt") | 1            | 21             | ""
-        fromFile("day12/c.txt") | 1            | 6488           | ""
+        lines                           | unfoldFactor | expectedResult | comment
+        fromFile("day12/example_1.txt") | 1            | 6              | ""
+        fromFile("day12/example_2.txt") | 1            | 21             | ""
+        fromFile("day12/input.txt")     | 1            | 6488           | ""
 
-        fromFile("day12/a.txt") | 5            | 6              | ""
-        fromFile("day12/b.txt") | 5            | 525152         | ""
-        fromFile("day12/c.txt") | 5            | 815364548481   | ""
+        fromFile("day12/example_1.txt") | 5            | 6              | ""
+        fromFile("day12/example_2.txt") | 5            | 525152         | ""
+        fromFile("day12/input.txt")     | 5            | 815364548481   | ""
     }
 
     def "count possible arrangements"() {

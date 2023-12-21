@@ -15,9 +15,9 @@ class LensLibraryTest extends Specification {
         sumOfHashes == expectedResult
 
         where:
-        lines                   | expectedResult | comment
-        fromFile("day15/a.txt") | 1320           | ""
-        fromFile("day15/b.txt") | 503154         | ""
+        lines                           | expectedResult | comment
+        fromFile("day15/example_1.txt") | 1320           | ""
+        fromFile("day15/input.txt")     | 503154         | ""
     }
 
     def "hash"() {
@@ -56,8 +56,8 @@ class LensLibraryTest extends Specification {
         focussingPower == expectedResult
 
         where:
-        lines                   | expectedResult | comment
-        fromFile("day15/a.txt") | 145            | ""
-        fromFile("day15/b.txt") | 251353         | ""
+        lines                           | expectedResult | comment
+        fromFile("day15/example_1.txt") | 145            | ""
+        fromFile("day15/input.txt")     | 251353         | ""
     }
 }

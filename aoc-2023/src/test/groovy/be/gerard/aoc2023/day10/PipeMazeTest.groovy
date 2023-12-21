@@ -19,12 +19,12 @@ class PipeMazeTest extends Specification {
         numberOfSteps == expectedNumberOfSteps
 
         where:
-        lines                   | expectedNumberOfSteps | comment
-        fromFile("day10/a.txt") | 4                     | ""
-        fromFile("day10/b.txt") | 4                     | ""
-        fromFile("day10/c.txt") | 8                     | ""
-        fromFile("day10/d.txt") | 8                     | ""
-        fromFile("day10/e.txt") | 6875                  | ""
+        lines                           | expectedNumberOfSteps | comment
+        fromFile("day10/example_1.txt") | 4                     | ""
+        fromFile("day10/example_2.txt") | 4                     | ""
+        fromFile("day10/example_3.txt") | 8                     | ""
+        fromFile("day10/example_4.txt") | 8                     | ""
+        fromFile("day10/input.txt")     | 6875                  | ""
     }
 
     def "number of tiles that are enclosed by the loop"() {
@@ -36,15 +36,16 @@ class PipeMazeTest extends Specification {
         numberOfEnclosedTiles == expectedNumberOfEnclosedTiles
 
         where:
-        lines                   | expectedNumberOfEnclosedTiles | comment
-        fromFile("day10/a.txt") | 1                             | ""
-        fromFile("day10/b.txt") | 1                             | ""
-        fromFile("day10/c.txt") | 1                             | ""
-        fromFile("day10/d.txt") | 1                             | ""
-        fromFile("day10/e.txt") | 471                           | ""
-        fromFile("day10/f.txt") | 4                             | ""
-        fromFile("day10/g.txt") | 8                             | ""
-        fromFile("day10/h.txt") | 10                            | ""
+        lines                           | expectedNumberOfEnclosedTiles | comment
+        fromFile("day10/example_1.txt") | 1                             | ""
+        fromFile("day10/example_2.txt") | 1                             | ""
+        fromFile("day10/example_3.txt") | 1                             | ""
+        fromFile("day10/example_4.txt") | 1                             | ""
+
+        fromFile("day10/example_5.txt") | 4                             | ""
+        fromFile("day10/example_6.txt") | 8                             | ""
+        fromFile("day10/example_7.txt") | 10                            | ""
+        fromFile("day10/input.txt")     | 471                           | ""
     }
 
     def "change of corners when moving to the next tile"() {

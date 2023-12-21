@@ -19,12 +19,12 @@ class CrucibleTest extends Specification {
         minimalHeatLoss == expectedResult
 
         where:
-        lines                   | expectedResult | comment
-        fromFile("day17/a.txt") | 102            | ""
-        fromFile("day17/b.txt") | 635            | ""
+        lines                           | expectedResult | comment
+        fromFile("day17/example_1.txt") | 102            | ""
+        fromFile("day17/input.txt")     | 635            | ""
 
-        fromFile("day17/c.txt") | 4              | ""
-        fromFile("day17/d.txt") | 6              | ""
+        fromFile("day17/extra_1.txt")   | 4              | ""
+        fromFile("day17/extra_2.txt")   | 6              | ""
     }
 
     def "minimal heat loss when moving ultra crucibles"() {
@@ -39,9 +39,9 @@ class CrucibleTest extends Specification {
         minimalHeatLoss == expectedResult
 
         where:
-        lines                   | expectedResult | comment
-        fromFile("day17/a.txt") | 94             | ""
-        fromFile("day17/b.txt") | 734            | ""
-        fromFile("day17/e.txt") | 71             | ""
+        lines                           | expectedResult | comment
+        fromFile("day17/example_1.txt") | 94             | ""
+        fromFile("day17/example_2.txt") | 71             | ""
+        fromFile("day17/input.txt")     | 734            | ""
     }
 }

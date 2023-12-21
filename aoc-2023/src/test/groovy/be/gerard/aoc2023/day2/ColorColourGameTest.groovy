@@ -20,9 +20,9 @@ class ColorColourGameTest extends Specification {
         sum == expectedResult
 
         where:
-        lines                  | maxCubesByColour                     | expectedResult | comment
-        fromFile("day2/a.txt") | ["red": 12, "green": 13, "blue": 14] | 8              | ""
-        fromFile("day2/b.txt") | ["red": 12, "green": 13, "blue": 14] | 2563           | ""
+        lines                          | maxCubesByColour                     | expectedResult | comment
+        fromFile("day2/example_1.txt") | ["red": 12, "green": 13, "blue": 14] | 8              | ""
+        fromFile("day2/input.txt")     | ["red": 12, "green": 13, "blue": 14] | 2563           | ""
     }
 
     def "multiply min required cubes by colour to play game"() {
@@ -55,9 +55,9 @@ class ColorColourGameTest extends Specification {
         sum == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day2/a.txt") | 2286           | ""
-        fromFile("day2/b.txt") | 70768          | ""
+        lines                          | expectedResult | comment
+        fromFile("day2/example_1.txt") | 2286           | ""
+        fromFile("day2/input.txt")     | 70768          | ""
     }
 
 }

@@ -16,13 +16,13 @@ class OasisAndSandInstabilitySensorTest extends Specification {
         sumOfExtrapolations == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day9/a.txt") | 114            | ""
-        fromFile("day9/b.txt") | 1762065988     | ""
-        fromFile("day9/c.txt") | 2              | ""
-        fromFile("day9/d.txt") | 2              | ""
-        fromFile("day9/e.txt") | 2              | ""
-        fromFile("day9/f.txt") | 0              | ""
+        lines                          | expectedResult | comment
+        fromFile("day9/example_1.txt") | 114            | ""
+        fromFile("day9/input.txt")     | 1762065988     | ""
+        fromFile("day9/extra_1.txt")   | 2              | ""
+        fromFile("day9/extra_2.txt")   | 2              | ""
+        fromFile("day9/extra_3.txt")   | 2              | ""
+        fromFile("day9/extra_4.txt")   | 0              | ""
     }
 
     def "sum of all backwards extrapolated values"() {
@@ -34,12 +34,12 @@ class OasisAndSandInstabilitySensorTest extends Specification {
         sumOfBackwardsExtrapolations == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day9/a.txt") | 2              | ""
-        fromFile("day9/b.txt") | 1066           | ""
-        fromFile("day9/c.txt") | 2              | ""
-        fromFile("day9/d.txt") | 2              | ""
-        fromFile("day9/e.txt") | 2              | ""
-        fromFile("day9/f.txt") | -8             | ""
+        lines                          | expectedResult | comment
+        fromFile("day9/example_1.txt") | 2              | ""
+        fromFile("day9/input.txt")     | 1066           | ""
+        fromFile("day9/extra_1.txt")   | 2              | ""
+        fromFile("day9/extra_2.txt")   | 2              | ""
+        fromFile("day9/extra_3.txt")   | 2              | ""
+        fromFile("day9/extra_4.txt")   | -8             | ""
     }
 }

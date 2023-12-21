@@ -9,10 +9,10 @@ class GenericMatrixTest extends Specification {
 
     def "transpose"() {
         when:
-        final GenericMatrix matrix = GenericMatrix.of(values)
+        final GenericMatrix matrix = Matrix.of(values)
 
         then:
-        assertThat(matrix.transpose()).isEqualTo(GenericMatrix.of(expectedResult))
+        assertThat(matrix.transpose()).isEqualTo(Matrix.of(expectedResult))
 
         where:
         values           | expectedResult   | comment
@@ -21,10 +21,10 @@ class GenericMatrixTest extends Specification {
 
     def "flip horizontal"() {
         when:
-        final GenericMatrix matrix = GenericMatrix.of(values)
+        final GenericMatrix matrix = Matrix.of(values)
 
         then:
-        assertThat(matrix.flipHorizontal()).isEqualTo(GenericMatrix.of(expectedResult))
+        assertThat(matrix.flipHorizontal()).isEqualTo(Matrix.of(expectedResult))
 
         where:
         values                 | expectedResult         | comment
@@ -34,10 +34,10 @@ class GenericMatrixTest extends Specification {
 
     def "flip vertical"() {
         when:
-        final GenericMatrix matrix = GenericMatrix.of(values)
+        final GenericMatrix matrix = Matrix.of(values)
 
         then:
-        assertThat(matrix.flipVertical()).isEqualTo(GenericMatrix.of(expectedResult))
+        assertThat(matrix.flipVertical()).isEqualTo(Matrix.of(expectedResult))
 
         where:
         values           | expectedResult   | comment
@@ -46,10 +46,10 @@ class GenericMatrixTest extends Specification {
 
     def "flip diagonal"() {
         when:
-        final GenericMatrix matrix = GenericMatrix.of(values)
+        final GenericMatrix matrix = Matrix.of(values)
 
         then:
-        assertThat(matrix.flipDiagonal()).isEqualTo(GenericMatrix.of(expectedResult))
+        assertThat(matrix.flipDiagonal()).isEqualTo(Matrix.of(expectedResult))
 
         where:
         values                 | expectedResult         | comment
@@ -59,10 +59,10 @@ class GenericMatrixTest extends Specification {
 
     def "rotate left"() {
         when:
-        final GenericMatrix matrix = GenericMatrix.of(values)
+        final GenericMatrix matrix = Matrix.of(values)
 
         then:
-        assertThat(matrix.rotateLeft()).isEqualTo(GenericMatrix.of(expectedResult))
+        assertThat(matrix.rotateLeft()).isEqualTo(Matrix.of(expectedResult))
 
         where:
         values                 | expectedResult           | comment
@@ -72,10 +72,10 @@ class GenericMatrixTest extends Specification {
 
     def "rotate right"() {
         when:
-        final GenericMatrix matrix = GenericMatrix.of(values)
+        final GenericMatrix matrix = Matrix.of(values)
 
         then:
-        assertThat(matrix.rotateRight()).isEqualTo(GenericMatrix.of(expectedResult))
+        assertThat(matrix.rotateRight()).isEqualTo(Matrix.of(expectedResult))
 
         where:
         values                 | expectedResult           | comment

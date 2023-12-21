@@ -21,9 +21,9 @@ class EngineSchematicTest extends Specification {
         sum == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day3/a.txt") | 4361           | ""
-        fromFile("day3/b.txt") | 544664         | ""
+        lines                          | expectedResult | comment
+        fromFile("day3/example_1.txt") | 4361           | ""
+        fromFile("day3/input.txt")     | 544664         | ""
     }
 
     def "sum of all ratios of every gear"() {
@@ -40,9 +40,9 @@ class EngineSchematicTest extends Specification {
         sum == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day3/a.txt") | 467835         | ""
-        fromFile("day3/b.txt") | 84495585       | ""
+        lines                          | expectedResult | comment
+        fromFile("day3/example_1.txt") | 467835         | ""
+        fromFile("day3/input.txt")     | 84495585       | ""
     }
 
 }

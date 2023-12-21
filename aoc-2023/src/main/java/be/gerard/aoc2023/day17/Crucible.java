@@ -2,8 +2,8 @@ package be.gerard.aoc2023.day17;
 
 import be.gerard.aoc.util.graph.Dijkstra;
 import be.gerard.aoc.util.input.Lines;
-import be.gerard.aoc.util.matrix.GenericMatrix;
 import be.gerard.aoc.util.matrix.IntMatrix;
+import be.gerard.aoc.util.matrix.Matrix;
 import be.gerard.aoc.util.point.Point2d;
 import be.gerard.aoc.util.spatial.Direction;
 
@@ -17,7 +17,7 @@ record Crucible(
 ) {
 
     static Crucible parse(final Lines<String> lines) {
-        return new Crucible(lines.as(GenericMatrix::parse).mapToInt(Character::getNumericValue));
+        return new Crucible(lines.as(Matrix::parse).mapToInt(Character::getNumericValue));
     }
 
     private List<Step> nextCrucibleSteps(final Step step) {

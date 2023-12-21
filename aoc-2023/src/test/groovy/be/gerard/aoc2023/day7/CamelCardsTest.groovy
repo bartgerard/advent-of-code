@@ -16,9 +16,9 @@ class CamelCardsTest extends Specification {
         totalWinnings == expectedTotalWinnings
 
         where:
-        lines                  | expectedTotalWinnings | comment
-        fromFile("day7/a.txt") | 6440                  | ""
-        fromFile("day7/b.txt") | 250347426             | ""
+        lines                          | expectedTotalWinnings | comment
+        fromFile("day7/example_1.txt") | 6440                  | ""
+        fromFile("day7/input.txt")     | 250347426             | ""
     }
 
     def "sum all winnings when playing with jokers"() {
@@ -30,9 +30,9 @@ class CamelCardsTest extends Specification {
         totalWinnings == expectedTotalWinnings
 
         where:
-        lines                  | expectedTotalWinnings | comment
-        fromFile("day7/a.txt") | 5905                  | ""
-        fromFile("day7/b.txt") | 251224870             | ""
+        lines                          | expectedTotalWinnings | comment
+        fromFile("day7/example_1.txt") | 5905                  | ""
+        fromFile("day7/input.txt")     | 251224870             | ""
     }
 
 }

@@ -16,13 +16,13 @@ class CosmosTest extends Specification {
         sumOfShortestPaths == expectedSumOfShortestPaths
 
         where:
-        lines                   | expansionFactor | expectedSumOfShortestPaths | comment
-        fromFile("day11/a.txt") | 2               | 374                        | ""
-        fromFile("day11/b.txt") | 2               | 10_231_178                 | ""
+        lines                           | expansionFactor | expectedSumOfShortestPaths | comment
+        fromFile("day11/example_1.txt") | 2               | 374                        | ""
+        fromFile("day11/input.txt")     | 2               | 10_231_178                 | ""
 
-        fromFile("day11/a.txt") | 10              | 1030                       | ""
-        fromFile("day11/a.txt") | 100             | 8410                       | ""
+        fromFile("day11/example_1.txt") | 10              | 1030                       | ""
+        fromFile("day11/example_1.txt") | 100             | 8410                       | ""
 
-        fromFile("day11/b.txt") | 1_000_000       | 622120986954               | ""
+        fromFile("day11/input.txt")     | 1_000_000       | 622120986954               | ""
     }
 }

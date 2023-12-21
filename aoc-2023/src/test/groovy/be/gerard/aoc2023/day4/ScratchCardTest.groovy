@@ -16,9 +16,9 @@ class ScratchCardTest extends Specification {
         sum == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day4/a.txt") | 13             | ""
-        fromFile("day4/b.txt") | 21138          | ""
+        lines                          | expectedResult | comment
+        fromFile("day4/example_1.txt") | 13             | ""
+        fromFile("day4/input.txt")     | 21138          | ""
     }
 
     def "total number of scratchcards won"() {
@@ -30,9 +30,9 @@ class ScratchCardTest extends Specification {
         sum == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day4/a.txt") | 30             | ""
-        fromFile("day4/b.txt") | 7185540        | ""
+        lines                          | expectedResult | comment
+        fromFile("day4/example_1.txt") | 30             | ""
+        fromFile("day4/input.txt")     | 7185540        | ""
     }
 
 }

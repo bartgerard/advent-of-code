@@ -17,9 +17,9 @@ class CalibrationValueTest extends Specification {
         sum == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day1/a.txt") | 142            | ""
-        fromFile("day1/b.txt") | 55108          | ""
+        lines                          | expectedResult | comment
+        fromFile("day1/example_1.txt") | 142            | ""
+        fromFile("day1/input.txt")     | 55108          | ""
     }
 
     def "sum of all of the calibration values lenient"() {
@@ -31,10 +31,10 @@ class CalibrationValueTest extends Specification {
         sum == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day1/a.txt") | 142            | ""
-        fromFile("day1/b.txt") | 56324          | ""
-        fromFile("day1/c.txt") | 281            | ""
+        lines                          | expectedResult | comment
+        fromFile("day1/example_1.txt") | 142            | ""
+        fromFile("day1/input.txt")     | 56324          | ""
+        fromFile("day1/example_2.txt") | 281            | ""
     }
 
     def "first and last digit"() {

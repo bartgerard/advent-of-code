@@ -2,6 +2,7 @@ package be.gerard.aoc2023.day16;
 
 import be.gerard.aoc.util.input.Lines;
 import be.gerard.aoc.util.matrix.GenericMatrix;
+import be.gerard.aoc.util.matrix.Matrix;
 import be.gerard.aoc.util.point.Point;
 import be.gerard.aoc.util.point.Point2d;
 import be.gerard.aoc.util.vector.Ray;
@@ -29,7 +30,7 @@ record Cave(
     private static final char SPLITTER_HORIZONTAL = '-';
 
     static Cave parse(final Lines<String> lines) {
-        return new Cave(lines.as(GenericMatrix::parse));
+        return new Cave(lines.as(Matrix::parse));
     }
 
 

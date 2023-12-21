@@ -18,23 +18,6 @@ public record GenericMatrix<T>(
         isTrue(values.stream().allMatch(row -> row.size() == width));
     }
 
-    public static <T> GenericMatrix<T> of(final List<List<T>> values) {
-        return new GenericMatrix<>(values);
-    }
-
-    public static GenericMatrix<Character> parse(final List<String> rows) {
-        notEmpty(rows, "rows is invalid");
-
-        final List<List<Character>> values = rows.stream()
-                .map(row -> row.chars()
-                        .mapToObj(c -> (char) c)
-                        .toList()
-                )
-                .toList();
-
-        return new GenericMatrix<>(values);
-    }
-
     @Override
     public int width() {
         return values.getFirst().size();

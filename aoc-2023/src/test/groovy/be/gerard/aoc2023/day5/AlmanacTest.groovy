@@ -15,9 +15,9 @@ class AlmanacTest extends Specification {
         lowestLocation == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day5/a.txt") | 35             | ""
-        fromFile("day5/b.txt") | 51752125       | ""
+        lines                          | expectedResult | comment
+        fromFile("day5/example_1.txt") | 35             | ""
+        fromFile("day5/input.txt")     | 51752125       | ""
     }
 
     def "lowest location number that corresponds to any of the initial ranged seeds"() {
@@ -29,9 +29,9 @@ class AlmanacTest extends Specification {
         lowestLocation == expectedResult
 
         where:
-        lines                  | expectedResult | comment
-        fromFile("day5/a.txt") | 46             | ""
-        fromFile("day5/b.txt") | 12634632       | ""
+        lines                          | expectedResult | comment
+        fromFile("day5/example_1.txt") | 46             | ""
+        fromFile("day5/input.txt")     | 12634632       | ""
     }
 
 }

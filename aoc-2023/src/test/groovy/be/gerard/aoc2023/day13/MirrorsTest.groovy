@@ -16,11 +16,11 @@ class MirrorsTest extends Specification {
         summary == expectedResult
 
         where:
-        lines                   | numberOfSmudges | expectedResult | comment
-        fromFile("day13/a.txt") | 0               | 405            | ""
-        fromFile("day13/b.txt") | 0               | 40006          | ""
+        lines                           | numberOfSmudges | expectedResult | comment
+        fromFile("day13/example_1.txt") | 0               | 405            | ""
+        fromFile("day13/input.txt")     | 0               | 40006          | ""
 
-        fromFile("day13/a.txt") | 1               | 400            | ""
-        fromFile("day13/b.txt") | 1               | 28627          | ""
+        fromFile("day13/example_1.txt") | 1               | 400            | ""
+        fromFile("day13/input.txt")     | 1               | 28627          | ""
     }
 }

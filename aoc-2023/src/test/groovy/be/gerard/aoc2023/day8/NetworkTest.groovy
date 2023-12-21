@@ -15,10 +15,10 @@ class NetworkTest extends Specification {
         requiredSteps == expectedRequiredSteps
 
         where:
-        lines                  | expectedRequiredSteps | comment
-        fromFile("day8/a.txt") | 2                     | ""
-        fromFile("day8/b.txt") | 6                     | ""
-        fromFile("day8/c.txt") | 12361                 | ""
+        lines                          | expectedRequiredSteps | comment
+        fromFile("day8/example_1.txt") | 2                     | ""
+        fromFile("day8/extra_1.txt")   | 6                     | ""
+        fromFile("day8/input.txt")     | 12361                 | ""
     }
 
     def "how many steps does it take before you're only on nodes that end with Z"() {
@@ -30,11 +30,11 @@ class NetworkTest extends Specification {
         requiredSteps == expectedRequiredSteps
 
         where:
-        lines                  | expectedRequiredSteps | comment
-        fromFile("day8/a.txt") | 2                     | ""
-        fromFile("day8/b.txt") | 6                     | ""
-        fromFile("day8/c.txt") | 18215611419223        | ""
-        fromFile("day8/d.txt") | 6                     | ""
+        lines                          | expectedRequiredSteps | comment
+        fromFile("day8/example_1.txt") | 2                     | ""
+        fromFile("day8/extra_1.txt")   | 6                     | ""
+        fromFile("day8/example_2.txt") | 6                     | ""
+        fromFile("day8/input.txt")     | 18215611419223        | ""
     }
 
 }

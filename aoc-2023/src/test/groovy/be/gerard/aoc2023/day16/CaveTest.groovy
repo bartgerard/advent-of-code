@@ -22,14 +22,14 @@ class CaveTest extends Specification {
         numberOfEnergizedTiles == expectedResult
 
         where:
-        lines                   | expectedResult | comment
-        fromFile("day16/a.txt") | 46             | ""
-        fromFile("day16/b.txt") | 7870           | ""
+        lines                           | expectedResult | comment
+        fromFile("day16/example_1.txt") | 46             | ""
+        fromFile("day16/input.txt")     | 7870           | ""
 
-        fromFile("day16/c.txt") | 7              | ""
-        fromFile("day16/d.txt") | 7              | ""
-        fromFile("day16/e.txt") | 9              | ""
-        fromFile("day16/f.txt") | 8              | ""
+        fromFile("day16/extra_1.txt")   | 7              | ""
+        fromFile("day16/extra_2.txt")   | 7              | ""
+        fromFile("day16/extra_3.txt")   | 9              | ""
+        fromFile("day16/extra_4.txt")   | 8              | ""
     }
 
     def "find max possible energized tiles"() {
@@ -41,8 +41,8 @@ class CaveTest extends Specification {
         numberOfEnergizedTiles == expectedResult
 
         where:
-        lines                   | expectedResult | comment
-        fromFile("day16/a.txt") | 51             | ""
-        fromFile("day16/b.txt") | 8143           | ""
+        lines                           | expectedResult | comment
+        fromFile("day16/example_1.txt") | 51             | ""
+        fromFile("day16/input.txt")     | 8143           | ""
     }
 }
