@@ -3,9 +3,12 @@ package be.gerard.aoc.util.matrix;
 import be.gerard.aoc.util.point.Point2d;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toUnmodifiableList;
 import static org.apache.commons.lang3.Validate.isTrue;
 import static org.apache.commons.lang3.Validate.notEmpty;
 
@@ -19,13 +22,25 @@ public record GenericMatrix<T>(
     }
 
     @Override
-    public int regionWidth() {
+    public int width() {
         return values.getFirst().size();
     }
 
     @Override
-    public int regionHeight() {
+    public int height() {
         return values.size();
+    }
+
+    public <O> GenericMatrix<O> map(final Function<T, O> mapper) {
+        return IntStream.range(0, width())
+                .mapToObj(column -> IntStream.range(0, height())
+                        .mapToObj(row -> mapper.apply(at(column, row)))
+                        .toList()
+                )
+                .collect(collectingAndThen(
+                        toUnmodifiableList(),
+                        GenericMatrix::new
+                ));
     }
 
     public T at(
@@ -42,8 +57,8 @@ public record GenericMatrix<T>(
     }
 
     public GenericMatrix<T> transpose() {
-        return new GenericMatrix<>(IntStream.range(0, regionWidth())
-                .mapToObj(column -> IntStream.range(0, regionHeight())
+        return new GenericMatrix<>(IntStream.range(0, width())
+                .mapToObj(column -> IntStream.range(0, height())
                         .mapToObj(row -> at(row, column))
                         .toList()
                 )
@@ -52,9 +67,9 @@ public record GenericMatrix<T>(
     }
 
     public GenericMatrix<T> flipHorizontal() {
-        return new GenericMatrix<>(IntStream.range(0, regionHeight())
-                .mapToObj(row -> IntStream.range(0, regionWidth())
-                        .mapToObj(column -> at(row, regionWidth() - column - 1))
+        return new GenericMatrix<>(IntStream.range(0, height())
+                .mapToObj(row -> IntStream.range(0, width())
+                        .mapToObj(column -> at(row, width() - column - 1))
                         .toList()
                 )
                 .toList()
@@ -62,9 +77,9 @@ public record GenericMatrix<T>(
     }
 
     public GenericMatrix<T> flipVertical() {
-        return new GenericMatrix<>(IntStream.range(0, regionHeight())
-                .mapToObj(row -> IntStream.range(0, regionWidth())
-                        .mapToObj(column -> at(regionHeight() - row - 1, column))
+        return new GenericMatrix<>(IntStream.range(0, height())
+                .mapToObj(row -> IntStream.range(0, width())
+                        .mapToObj(column -> at(height() - row - 1, column))
                         .toList()
                 )
                 .toList()
@@ -72,9 +87,9 @@ public record GenericMatrix<T>(
     }
 
     public GenericMatrix<T> flipDiagonal() {
-        return new GenericMatrix<>(IntStream.range(0, regionHeight())
-                .mapToObj(row -> IntStream.range(0, regionWidth())
-                        .mapToObj(column -> at(regionHeight() - row - 1, regionWidth() - column - 1))
+        return new GenericMatrix<>(IntStream.range(0, height())
+                .mapToObj(row -> IntStream.range(0, width())
+                        .mapToObj(column -> at(height() - row - 1, width() - column - 1))
                         .toList()
                 )
                 .toList()

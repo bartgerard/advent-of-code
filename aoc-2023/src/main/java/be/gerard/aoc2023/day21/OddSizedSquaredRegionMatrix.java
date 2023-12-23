@@ -1,5 +1,7 @@
-package be.gerard.aoc.util.matrix;
+package be.gerard.aoc2023.day21;
 
+import be.gerard.aoc.util.matrix.IntMatrix;
+import be.gerard.aoc.util.matrix.Matrix;
 import be.gerard.aoc.util.point.Point;
 import be.gerard.aoc.util.point.Point2d;
 
@@ -14,20 +16,21 @@ import static java.util.stream.Collectors.toUnmodifiableSet;
 import static org.apache.commons.lang3.Validate.isTrue;
 import static org.apache.commons.lang3.Validate.notEmpty;
 
-public record RegionIntMatrix(
+public record OddSizedSquaredRegionMatrix(
         List<List<IntMatrix>> regions,
         int regionWidth,
         int regionHeight,
         int width,
-        int height
+        int height,
+        Point2d center
 ) implements Matrix {
-    public static RegionIntMatrix of(final IntMatrix[][] matrices) {
+    public static OddSizedSquaredRegionMatrix of(final IntMatrix[][] matrices) {
         notEmpty(matrices);
         final IntMatrix first = matrices[0][0];
 
         isTrue(IntStream.range(0, matrices.length)
                 .allMatch(i -> IntStream.range(0, matrices[i].length)
-                        .allMatch(j -> matrices[i][j].regionWidth() == first.regionWidth() && matrices[i][j].regionHeight() == first.regionHeight())
+                        .allMatch(j -> matrices[i][j].width() == first.width() && matrices[i][j].height() == first.height())
                 )
         );
 
@@ -38,22 +41,26 @@ public record RegionIntMatrix(
                 )
                 .toList();
 
-        return new RegionIntMatrix(
+        return new OddSizedSquaredRegionMatrix(
                 regions,
-                first.regionWidth(),
-                first.regionHeight(),
-                first.regionWidth() * regions.getFirst().size(),
-                first.regionHeight() * regions.size()
+                first.width(),
+                first.height(),
+                first.width() * regions.getFirst().size(),
+                first.height() * regions.size(),
+                Point.of(
+                        first.width() / 2 + 1,
+                        first.height() / 2 + 1
+                )
         );
     }
 
     @Override
-    public int regionWidth() {
+    public int width() {
         return regionWidth * regions.getFirst().size();
     }
 
     @Override
-    public int regionHeight() {
+    public int height() {
         return regionHeight * regions.size();
     }
 
@@ -77,7 +84,7 @@ public record RegionIntMatrix(
             final int row,
             final int column
     ) {
-        return at(floorMod(row, regionHeight()), floorMod(column, regionWidth()));
+        return at(floorMod(row, height()), floorMod(column, width()));
     }
 
     public IntMatrix regionFor(final int regionId) {
@@ -91,6 +98,13 @@ public record RegionIntMatrix(
         final int x = point.x() / regionWidth;
         final int y = point.y() / regionHeight;
 
+        return regionIdFor(x, y);
+    }
+
+    public int regionIdFor(
+            final int x,
+            final int y
+    ) {
         return y * regions.size() + x;
     }
 
@@ -135,4 +149,5 @@ public record RegionIntMatrix(
                 floorMod(point.y(), height())
         );
     }
+
 }

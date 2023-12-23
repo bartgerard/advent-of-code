@@ -1,7 +1,5 @@
 package be.gerard.aoc2023.day21;
 
-import be.gerard.aoc.util.matrix.RegionIntMatrix;
-
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -11,16 +9,18 @@ import static java.util.stream.Collectors.toUnmodifiableList;
 public record RegionTracking(
         List<PatternForRegion> regions
 ) {
-    public static RegionTracking of(final RegionIntMatrix grid) {
+    public static RegionTracking of(final OddSizedSquaredRegionMatrix grid) {
         return IntStream.range(0, grid.regions().size())
                 .boxed()
                 .flatMap(y -> IntStream.range(0, grid.regions().getFirst().size())
                         .mapToObj(x -> {
-                            final int regionId = y * grid.regions().getFirst().size() + x;
+                            final int regionId = grid.regionIdFor(x, y);
+                            //final int regionId = y * grid.regions().getFirst().size() + x;
 
                             return new PatternForRegion(
                                     regionId,
-                                    grid.regions().get(y).get(x)
+                                    grid.regions().get(y).get(x),
+                                    grid.center()
                             );
                         })
                 )
@@ -29,6 +29,11 @@ public record RegionTracking(
                         RegionTracking::new
                 ));
     }
+
+    public boolean isFinished(final int regionId) {
+        return regions.get(regionId).isCycleFound();
+    }
+
 
     public void add(
             final long[] reachablePlotsByRegion

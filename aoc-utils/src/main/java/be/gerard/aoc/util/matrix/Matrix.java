@@ -25,17 +25,17 @@ public interface Matrix {
         return new GenericMatrix<>(values);
     }
 
-    int regionWidth();
+    int width();
 
-    int regionHeight();
+    int height();
 
     default boolean isValid(
             final Point2d point
     ) {
         return point.x() >= 0
                 && point.y() >= 0
-                && point.y() < regionHeight()
-                && point.x() < regionWidth();
+                && point.y() < height()
+                && point.x() < width();
     }
 
 }

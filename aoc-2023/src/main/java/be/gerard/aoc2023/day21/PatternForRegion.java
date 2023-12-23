@@ -1,6 +1,7 @@
 package be.gerard.aoc2023.day21;
 
 import be.gerard.aoc.util.matrix.IntMatrix;
+import be.gerard.aoc.util.point.Point2d;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,42 +9,54 @@ import java.util.List;
 class PatternForRegion {
     private final int regionId;
     private final IntMatrix grid;
+    private final Point2d center;
     private final List<Long> start = new ArrayList<>();
     private final List<Long> cycle = new ArrayList<>();
     private long previousRemainingPlots;
-    private boolean flooded;
     private boolean cycleFound;
-    private int minSteps = -1;
+    private int stepsToRegion = -1;
+    private int stepsToCenter = -1;
+    private int stepsToFull = -1;
 
-    PatternForRegion(int regionId, IntMatrix grid) {
+    PatternForRegion(
+            final int regionId,
+            final IntMatrix grid,
+            final Point2d center
+    ) {
         this.regionId = regionId;
         this.grid = grid;
         this.previousRemainingPlots = grid.findAllPointsWithValue(-1).size();
+        this.center = center;
     }
 
     public void add(final long reachablePlots) {
-        if (cycleFound) {
+        if (this.cycleFound) {
             return;
         }
 
-        if (flooded) {
-            if (cycle.contains(reachablePlots)) {
+        if (this.stepsToFull >= 0) {
+            if (this.cycle.contains(reachablePlots)) {
                 this.cycleFound = true;
             } else {
-                cycle.add(reachablePlots);
+                this.cycle.add(reachablePlots);
             }
             return;
         }
 
-        start.add(reachablePlots);
-        final int remainingPlots = grid.findAllPointsWithValue(-1).size();
+        this.start.add(reachablePlots);
+        final int remainingPlots = this.grid.findAllPointsWithValue(-1).size();
 
-        if (minSteps >= 0 && previousRemainingPlots <= remainingPlots || remainingPlots == 0) {
-            this.flooded = true;
+        if (0 <= this.stepsToRegion && this.previousRemainingPlots <= remainingPlots || remainingPlots == 0) {
+            this.stepsToFull = start.size();
         }
-
-        if (minSteps < 0 && 0 < reachablePlots) {
-            minSteps = start.size();
+        if (remainingPlots < this.previousRemainingPlots) {
+            this.previousRemainingPlots = remainingPlots;
+        }
+        if (this.stepsToCenter < 0 && grid.at(center) > -1) {
+            this.stepsToCenter = start.size();
+        }
+        if (this.stepsToRegion < 0 && 0 < reachablePlots) {
+            this.stepsToRegion = start.size();
         }
     }
 
@@ -60,6 +73,6 @@ class PatternForRegion {
     }
 
     public int minSteps() {
-        return minSteps;
+        return stepsToRegion;
     }
 }

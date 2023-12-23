@@ -1,27 +1,39 @@
 package be.gerard.aoc2023.day21;
 
 import be.gerard.aoc.util.matrix.IntMatrix;
-import be.gerard.aoc.util.matrix.RegionIntMatrix;
 import be.gerard.aoc.util.point.Point2d;
 import be.gerard.aoc.util.vector.Vector;
 
 import java.util.Set;
 
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
 record InfiniteGarden(
         IntMatrix grid,
-        RegionIntMatrix infiniteGrid
+        OddSizedSquaredRegionMatrix infiniteGrid
 ) {
     InfiniteGarden(final IntMatrix grid) {
         this(grid, region(grid));
     }
 
-    private static RegionIntMatrix region(final IntMatrix grid) {
-        final IntMatrix[][] expanded = Garden.expand(grid);
+    private static OddSizedSquaredRegionMatrix region(final IntMatrix grid) {
+        final IntMatrix[][] expanded = expand(grid);
 
-        return RegionIntMatrix.of(expanded);
+        return OddSizedSquaredRegionMatrix.of(expanded);
+    }
+
+    static IntMatrix[][] expand(final IntMatrix grid) {
+        final IntMatrix center = grid.copy();
+
+        final IntMatrix other = grid.copy();
+        final Set<Point2d> startPoints = other.findAllPointsWithValue(0);
+        startPoints.forEach(startPoint -> other.set(startPoint, -1));
+
+        return new IntMatrix[][]{
+                {other, other, other},
+                {other, center, other},
+                {other, other, other}
+        };
     }
 
     long numberOfPlotsReachableAfter(final int steps) {
@@ -39,15 +51,18 @@ record InfiniteGarden(
                     .flatMap(point -> Vector.ORTHOGONAL_DIRECTIONS.stream()
                             .map(point::add)
                     )
-                    .collect(collectingAndThen(
-                            toUnmodifiableSet(),
-                            infiniteGrid::cycle
-                    ));
+                    .filter(infiniteGrid::isValid)
+                    //.filter(point -> tracking.isFinished(infiniteGrid.regionIdFor(point)))
+                    .collect(toUnmodifiableSet());
+
+            if (newPoints.isEmpty()) {
+                break;
+            }
 
             final long[] reachablePlotsByRegion = new long[9];
 
             for (final Point2d newPoint : newPoints) {
-                if (infiniteGrid.cyclicAt(newPoint) < step) {
+                if (infiniteGrid.at(newPoint) < step) {
                     infiniteGrid.set(newPoint, step);
                     final int regionId = infiniteGrid.regionIdFor(newPoint);
                     reachablePlotsByRegion[regionId]++;
@@ -56,7 +71,7 @@ record InfiniteGarden(
 
             tracking.add(reachablePlotsByRegion);
 
-            if (tracking.finished()) {// || newPoints.stream().anyMatch(p -> p.x() == 0)
+            if (tracking.finished()) {
                 break;
             }
         }

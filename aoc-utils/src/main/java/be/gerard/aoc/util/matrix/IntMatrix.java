@@ -19,12 +19,12 @@ public record IntMatrix(
     public static IntMatrix of(final IntMatrix[][] matrices) {
         notEmpty(matrices);
         final IntMatrix first = matrices[0][0];
-        final int height = first.regionHeight();
-        final int width = first.regionWidth();
+        final int height = first.height();
+        final int width = first.width();
 
         isTrue(IntStream.range(0, matrices.length)
                 .allMatch(i -> IntStream.range(0, matrices[i].length)
-                        .allMatch(j -> matrices[i][j].regionWidth() == width && matrices[i][j].regionHeight() == height)
+                        .allMatch(j -> matrices[i][j].width() == width && matrices[i][j].height() == height)
                 )
         );
 
@@ -46,7 +46,7 @@ public record IntMatrix(
     }
 
     public IntMatrix copy() {
-        final int[][] newValues = IntStream.range(0, regionHeight())
+        final int[][] newValues = IntStream.range(0, height())
                 .mapToObj(y -> Arrays.copyOf(values[y], values[y].length))
                 .toArray(int[][]::new);
         return new IntMatrix(newValues);
@@ -65,12 +65,12 @@ public record IntMatrix(
     }
 
     @Override
-    public int regionWidth() {
+    public int width() {
         return values[0].length;
     }
 
     @Override
-    public int regionHeight() {
+    public int height() {
         return values.length;
     }
 
@@ -93,7 +93,7 @@ public record IntMatrix(
             final int row,
             final int column
     ) {
-        return at(floorMod(row, regionHeight()), floorMod(column, regionWidth()));
+        return at(floorMod(row, height()), floorMod(column, width()));
     }
 
     public void set(
@@ -104,9 +104,9 @@ public record IntMatrix(
     }
 
     public Set<Point2d> findAllPointsWithValue(final int value) {
-        return IntStream.range(0, regionHeight())
+        return IntStream.range(0, height())
                 .boxed()
-                .flatMap(y -> IntStream.range(0, regionWidth())
+                .flatMap(y -> IntStream.range(0, width())
                         .filter(x -> at(y, x) == value)
                         .mapToObj(x -> Point.of(x, y))
                 )
@@ -119,8 +119,8 @@ public record IntMatrix(
 
     public Point2d end() {
         return Point.of(
-                regionWidth() - 1,
-                regionHeight() - 1
+                width() - 1,
+                height() - 1
         );
     }
 
@@ -129,8 +129,8 @@ public record IntMatrix(
     }
 
     public boolean contains(final int value) {
-        return IntStream.range(0, regionHeight())
-                .anyMatch(y -> IntStream.range(0, regionWidth())
+        return IntStream.range(0, height())
+                .anyMatch(y -> IntStream.range(0, width())
                         .anyMatch(x -> at(y, x) == value)
                 );
     }
@@ -143,8 +143,8 @@ public record IntMatrix(
 
     public Point2d cycle(final Point2d point) {
         return Point.of(
-                floorMod(point.x(), regionWidth()),
-                floorMod(point.y(), regionHeight())
+                floorMod(point.x(), width()),
+                floorMod(point.y(), height())
         );
     }
 
