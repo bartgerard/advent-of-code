@@ -37,12 +37,17 @@ public interface Tile {
 
     List<Vector2d> directions();
 
-    record Forest(
+    boolean isAccessible();
 
-    ) implements Tile {
+    record Forest() implements Tile {
         @Override
         public List<Vector2d> directions() {
             return emptyList();
+        }
+
+        @Override
+        public boolean isAccessible() {
+            return false;
         }
     }
 
@@ -52,14 +57,22 @@ public interface Tile {
         public static Slope going(final Direction direction) {
             return new Slope(List.of(Vector.in(direction)));
         }
+
+        @Override
+        public boolean isAccessible() {
+            return true;
+        }
     }
 
-    record Path(
-
-    ) implements Tile {
+    record Path() implements Tile {
         @Override
         public List<Vector2d> directions() {
             return Vector2d.ORTHOGONAL_DIRECTIONS;
+        }
+
+        @Override
+        public boolean isAccessible() {
+            return true;
         }
     }
 }

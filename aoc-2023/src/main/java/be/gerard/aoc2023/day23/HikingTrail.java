@@ -2,6 +2,7 @@ package be.gerard.aoc2023.day23;
 
 import be.gerard.aoc.util.input.Lines;
 import be.gerard.aoc.util.matrix.GenericMatrix;
+import be.gerard.aoc.util.matrix.IntMatrix;
 import be.gerard.aoc.util.matrix.Matrix;
 import be.gerard.aoc.util.point.Point;
 import be.gerard.aoc.util.point.Point2d;
@@ -23,6 +24,7 @@ public record HikingTrail(
     }
 
     long findLengthOfLongestHike() {
+        IntMatrix.
         return 0;
     }
 }
