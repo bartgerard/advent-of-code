@@ -1,11 +1,13 @@
 package be.gerard.aoc.util.matrix;
 
+import be.gerard.aoc.util.point.Point;
 import be.gerard.aoc.util.point.Point2d;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toUnmodifiableList;
@@ -102,6 +104,14 @@ public record GenericMatrix<T>(
 
     public GenericMatrix<T> rotateRight() {
         return flipVertical().transpose();
+    }
+
+    public Stream<Point2d> points() {
+        return IntStream.range(0, height())
+                .boxed()
+                .flatMap(y -> IntStream.range(0, width())
+                        .mapToObj(x -> Point.of(x, y))
+                );
     }
 
     public IntMatrix mapToInt(final ToIntFunction<T> mapper) {

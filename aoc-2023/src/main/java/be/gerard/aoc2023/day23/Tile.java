@@ -39,6 +39,8 @@ public interface Tile {
 
     boolean isAccessible();
 
+    Tile makeClimbable();
+
     record Forest() implements Tile {
         @Override
         public List<Vector2d> directions() {
@@ -48,6 +50,11 @@ public interface Tile {
         @Override
         public boolean isAccessible() {
             return false;
+        }
+
+        @Override
+        public Tile makeClimbable() {
+            return this;
         }
     }
 
@@ -62,6 +69,11 @@ public interface Tile {
         public boolean isAccessible() {
             return true;
         }
+
+        @Override
+        public Tile makeClimbable() {
+            return PATH_TILE;
+        }
     }
 
     record Path() implements Tile {
@@ -73,6 +85,11 @@ public interface Tile {
         @Override
         public boolean isAccessible() {
             return true;
+        }
+
+        @Override
+        public Tile makeClimbable() {
+            return this;
         }
     }
 }

@@ -81,6 +81,10 @@ public final class Dijkstra {
         }
 
         public List<E> fullPath() {
+            return fullPathTo(this.destination);
+        }
+
+        public List<E> fullPathTo(final E destination) {
             final List<E> result = new ArrayList<>();
             E current = destination;
 
