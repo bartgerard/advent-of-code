@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static java.util.function.Predicate.not;
 import static java.util.stream.Collectors.toUnmodifiableMap;
@@ -70,12 +71,19 @@ public record HikingTrail(
 
     long findLengthOfLongestHike() {
         final List<Point2d> allIntersections = findAllIntersections();
+        final List<Point2d> pointsOfInterest = Stream.concat(
+                        Stream.of(start(), end()),
+                        allIntersections.stream()
+                )
+                .distinct()
+                .toList();
+
 
         final Intersection start = new Intersection(null, start(), 0, false);
 
         final Map<Point2d, Map<Point2d, Integer>> graph = generateGraph(
                 start,
-                allIntersections
+                pointsOfInterest
         );
 
         final List<Point2d> path = new ArrayList<>();
@@ -90,13 +98,13 @@ public record HikingTrail(
 
     private Map<Point2d, Map<Point2d, Integer>> generateGraph(
             final Intersection intersection,
-            final List<Point2d> allIntersections
+            final List<Point2d> pointsOfInterest
     ) {
         final Map<Point2d, Map<Point2d, Integer>> costByIntersection = new LinkedHashMap<>();
 
         generateGraph(
                 intersection,
-                allIntersections,
+                pointsOfInterest,
                 costByIntersection
         );
 
@@ -105,7 +113,7 @@ public record HikingTrail(
 
     private void generateGraph(
             final Intersection intersection,
-            final List<Point2d> allIntersections,
+            final List<Point2d> pointsOfInterest,
             final Map<Point2d, Map<Point2d, Integer>> costByIntersection
     ) {
         final Point2d current = intersection.current();
@@ -116,7 +124,7 @@ public record HikingTrail(
         final List<Intersection> nextIntersections = nextPoints.stream()
                 .map(nextPoint -> nextIntersection(
                         List.of(current, nextPoint),
-                        allIntersections
+                        pointsOfInterest
                 ))
                 .toList();
 
@@ -132,19 +140,24 @@ public record HikingTrail(
                 .filter(nextIntersection -> !costByIntersection.containsKey(nextIntersection.current()))
                 .forEach(nextIntersection -> generateGraph(
                         nextIntersection,
-                        allIntersections,
+                        pointsOfInterest,
                         costByIntersection
                 ));
 
-        nextIntersections.stream()
+        final Map<Point2d, Map<Point2d, Integer>> bidirectionalIntersections = nextIntersections.stream()
                 .filter(Intersection::bidirectional)
                 .filter(nextIntersection -> costByIntersection.containsKey(nextIntersection.current()))
-                .forEach(nextIntersection -> Maps.put(costByIntersection.get(nextIntersection.current()), current, nextIntersection.length()));
+                .collect(toUnmodifiableMap(
+                        Intersection::current,
+                        nextIntersection -> Maps.put(costByIntersection.get(nextIntersection.current()), current, nextIntersection.length())
+                ));
+
+        costByIntersection.putAll(bidirectionalIntersections);
     }
 
     private Intersection nextIntersection(
             final List<Point2d> lastSteps,
-            final List<Point2d> allIntersections
+            final List<Point2d> pointsOfInterest
     ) {
         final List<Point2d> path = new ArrayList<>(lastSteps);
 
@@ -152,7 +165,7 @@ public record HikingTrail(
 
         boolean bidirectional = true;
 
-        while (!Objects.equals(current, end()) && !allIntersections.contains(current)) {
+        while (!pointsOfInterest.contains(current)) {
             final List<Point2d> nextSteps = nextSteps(current);
 
             if (nextSteps.size() == 1) {

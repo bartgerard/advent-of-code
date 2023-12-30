@@ -33,7 +33,7 @@ class HikingTrailTest extends Specification {
 
         where:
         lines                           | expectedResult | comment
-        //fromFile("day23/example_1.txt") | 154            | ""
+        fromFile("day23/example_1.txt") | 154            | ""
         fromFile("day23/input.txt")     | 6586           | ""
     }
 }
