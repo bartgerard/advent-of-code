@@ -1,6 +1,6 @@
 package be.gerard.aoc.util.matrix;
 
-import be.gerard.aoc.util.point.Point2d;
+import be.gerard.aoc.util.geometry.Point2d;
 
 public record GridRegion(
         int minX,

@@ -1,8 +1,8 @@
 package be.gerard.aoc2023.day11;
 
 import be.gerard.aoc.util.input.Lines;
-import be.gerard.aoc.util.point.Point;
-import be.gerard.aoc.util.point.Point2d;
+import be.gerard.aoc.util.geometry.Point;
+import be.gerard.aoc.util.geometry.Point2d;
 
 import java.util.List;
 import java.util.Set;

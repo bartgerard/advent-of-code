@@ -1,6 +1,5 @@
-package be.gerard.aoc.util.math;
+package be.gerard.aoc.util.geometry;
 
-import be.gerard.aoc.util.point.Point2d;
 import be.gerard.aoc.util.spatial.Direction;
 
 import java.util.List;

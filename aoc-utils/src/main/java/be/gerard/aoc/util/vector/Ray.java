@@ -1,6 +1,7 @@
 package be.gerard.aoc.util.vector;
 
-import be.gerard.aoc.util.point.Point2d;
+import be.gerard.aoc.util.geometry.Point2d;
+import be.gerard.aoc.util.geometry.Vector2d;
 
 public interface Ray {
     static Ray2d of(

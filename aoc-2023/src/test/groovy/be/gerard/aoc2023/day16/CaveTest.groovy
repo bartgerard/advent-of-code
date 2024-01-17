@@ -1,9 +1,9 @@
 package be.gerard.aoc2023.day16
 
-import be.gerard.aoc.util.point.Point
+import be.gerard.aoc.util.geometry.Point
 import be.gerard.aoc.util.vector.Ray
 import be.gerard.aoc.util.vector.Ray2d
-import be.gerard.aoc.util.vector.Vector
+import be.gerard.aoc.util.geometry.Vector
 import spock.lang.Specification
 
 import static be.gerard.aoc.util.input.Lines.fromFile

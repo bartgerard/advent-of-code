@@ -109,12 +109,12 @@ public record Almanac(
                 .map(Transformation::sourceRange)
                 .toList();
 
-        final List<LongRange> usedIntersections = LongRange.usedIntersections(
+        final List<LongRange> usedIntervals = LongRange.usedIntervals(
                 Stream.concat(seeds.stream(), combinedSourceRanges.stream()).toList(),
                 seeds
         );
 
-        final List<Long> lowestLocationCandidates = usedIntersections.stream().map(LongRange::fromInclusive).toList();
+        final List<Long> lowestLocationCandidates = usedIntervals.stream().map(LongRange::fromInclusive).toList();
 
         return lowestLocationCandidates.stream()
                 .mapToLong(seed -> Transformation.apply(combinedTransformations, seed))

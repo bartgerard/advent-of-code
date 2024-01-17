@@ -74,7 +74,7 @@ public record IntRange(
         return new IntRange(fromInclusive, fromInclusive + length - 1);
     }
 
-    public static List<IntRange> allIntersections(
+    public static List<IntRange> intervals(
             final Collection<IntRange> ranges
     ) {
         if (ranges.isEmpty()) {
@@ -103,19 +103,19 @@ public record IntRange(
                 .toList();
     }
 
-    public static List<IntRange> usedIntersections(
+    public static List<IntRange> usedIntervals(
             final Collection<IntRange> ranges
     ) {
-        return usedIntersections(ranges, ranges);
+        return usedIntervals(ranges, ranges);
     }
 
-    public static List<IntRange> usedIntersections(
+    public static List<IntRange> usedIntervals(
             final Collection<IntRange> allRanges,
             final Collection<IntRange> usedByRanges
     ) {
-        final List<IntRange> allIntersections = allIntersections(allRanges);
+        final List<IntRange> intervals = intervals(allRanges);
 
-        return allIntersections.stream()
+        return intervals.stream()
                 .filter(intersection -> usedByRanges.stream()
                         .anyMatch(range -> range.contains(intersection.fromInclusive()))
                 )
@@ -125,17 +125,17 @@ public record IntRange(
     public static List<IntRange> allGaps(
             final Collection<IntRange> ranges
     ) {
-        final List<IntRange> sortedIntersections = usedIntersections(ranges);
+        final List<IntRange> sortedIntervals = usedIntervals(ranges);
 
-        if (sortedIntersections.size() <= 1) {
+        if (sortedIntervals.size() <= 1) {
             return emptyList();
         }
 
-        return IntStream.range(1, sortedIntersections.size())
-                .filter(i -> sortedIntersections.get(i - 1).toExclusive() != sortedIntersections.get(i).fromInclusive())
+        return IntStream.range(1, sortedIntervals.size())
+                .filter(i -> sortedIntervals.get(i - 1).toExclusive() != sortedIntervals.get(i).fromInclusive())
                 .mapToObj(i -> IntRange.of(
-                        sortedIntersections.get(i - 1).toExclusive(),
-                        sortedIntersections.get(i).fromExclusive()
+                        sortedIntervals.get(i - 1).toExclusive(),
+                        sortedIntervals.get(i).fromExclusive()
                 ))
                 .toList();
     }
@@ -143,20 +143,20 @@ public record IntRange(
     public static List<IntRange> merge(
             final Collection<IntRange> ranges
     ) {
-        final List<IntRange> sortedIntersections = usedIntersections(ranges);
+        final List<IntRange> sortedIntervals = usedIntervals(ranges);
 
-        if (sortedIntersections.isEmpty()) {
+        if (sortedIntervals.isEmpty()) {
             return emptyList();
-        } else if (sortedIntersections.size() == 1) {
-            return List.of(sortedIntersections.getFirst());
+        } else if (sortedIntervals.size() == 1) {
+            return List.of(sortedIntervals.getFirst());
         }
 
-        final int[] nonConsecutiveIndices = IntStream.range(1, sortedIntersections.size())
-                .filter(i -> sortedIntersections.get(i - 1).toExclusive() != sortedIntersections.get(i).fromInclusive())
+        final int[] nonConsecutiveIndices = IntStream.range(1, sortedIntervals.size())
+                .filter(i -> sortedIntervals.get(i - 1).toExclusive() != sortedIntervals.get(i).fromInclusive())
                 .toArray();
 
         final int[] borders = IntStream.concat(
-                        IntStream.of(0, sortedIntersections.size()),
+                        IntStream.of(0, sortedIntervals.size()),
                         Arrays.stream(nonConsecutiveIndices)
                 )
                 .sorted()
@@ -164,8 +164,8 @@ public record IntRange(
 
         return IntStream.range(1, borders.length)
                 .mapToObj(i -> IntRange.of(
-                        sortedIntersections.get(borders[i - 1]).fromInclusive(),
-                        sortedIntersections.get(borders[i] - 1).toInclusive()
+                        sortedIntervals.get(borders[i - 1]).fromInclusive(),
+                        sortedIntervals.get(borders[i] - 1).toInclusive()
                 ))
                 .toList();
     }
@@ -205,17 +205,6 @@ public record IntRange(
                 Integer.max(fromInclusive, range.fromInclusive()),
                 Integer.min(toInclusive, range.toInclusive())
         );
-    }
-
-    public IntRange plus(final int value) {
-        return IntRange.of(
-                fromInclusive + value,
-                toInclusive + value
-        );
-    }
-
-    public IntRange min(final int value) {
-        return plus(-value);
     }
 
     public int length() {

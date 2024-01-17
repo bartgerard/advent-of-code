@@ -3,12 +3,12 @@ package be.gerard.aoc2023.day16;
 import be.gerard.aoc.util.input.Lines;
 import be.gerard.aoc.util.matrix.GenericMatrix;
 import be.gerard.aoc.util.matrix.Matrix;
-import be.gerard.aoc.util.point.Point;
-import be.gerard.aoc.util.point.Point2d;
+import be.gerard.aoc.util.geometry.Point;
+import be.gerard.aoc.util.geometry.Point2d;
 import be.gerard.aoc.util.vector.Ray;
 import be.gerard.aoc.util.vector.Ray2d;
-import be.gerard.aoc.util.vector.Vector;
-import be.gerard.aoc.util.vector.Vector2d;
+import be.gerard.aoc.util.geometry.Vector;
+import be.gerard.aoc.util.geometry.Vector2d;
 
 import java.util.Arrays;
 import java.util.HashSet;

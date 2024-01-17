@@ -4,7 +4,7 @@ import be.gerard.aoc.util.graph.Dijkstra;
 import be.gerard.aoc.util.input.Lines;
 import be.gerard.aoc.util.matrix.IntMatrix;
 import be.gerard.aoc.util.matrix.Matrix;
-import be.gerard.aoc.util.point.Point2d;
+import be.gerard.aoc.util.geometry.Point2d;
 import be.gerard.aoc.util.spatial.Direction;
 
 import java.util.ArrayList;

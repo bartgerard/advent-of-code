@@ -1,4 +1,4 @@
-package be.gerard.aoc.util.vector;
+package be.gerard.aoc.util.geometry;
 
 import be.gerard.aoc.util.spatial.Direction;
 
@@ -18,6 +18,14 @@ public interface Vector {
             final int y
     ) {
         return new Vector2d(x, y);
+    }
+
+    static Vector3d of(
+            final long x,
+            final long y,
+            final long z
+    ) {
+        return new Vector3d(x, y, z);
     }
 
 

@@ -1,8 +1,8 @@
 package be.gerard.aoc2023.day21;
 
 import be.gerard.aoc.util.matrix.IntMatrix;
-import be.gerard.aoc.util.point.Point2d;
-import be.gerard.aoc.util.vector.Vector;
+import be.gerard.aoc.util.geometry.Point2d;
+import be.gerard.aoc.util.geometry.Vector;
 
 import java.util.Set;
 

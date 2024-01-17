@@ -1,6 +1,6 @@
 package be.gerard.aoc2023.day10;
 
-import be.gerard.aoc.util.point.Point2d;
+import be.gerard.aoc.util.geometry.Point2d;
 import be.gerard.aoc.util.spatial.CardinalDirection;
 
 record Move(

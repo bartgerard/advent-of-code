@@ -1,4 +1,4 @@
-package be.gerard.aoc.util.point;
+package be.gerard.aoc.util.geometry;
 
 public interface Point {
     static Point2d of(

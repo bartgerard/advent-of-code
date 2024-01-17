@@ -1,4 +1,4 @@
-package be.gerard.aoc.util.point;
+package be.gerard.aoc.util.geometry;
 
 import java.util.List;
 import java.util.stream.IntStream;

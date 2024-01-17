@@ -1,9 +1,9 @@
 package be.gerard.aoc.util.matrix;
 
-import be.gerard.aoc.util.point.Point;
-import be.gerard.aoc.util.point.Point2d;
+import be.gerard.aoc.util.geometry.Point;
+import be.gerard.aoc.util.geometry.Point2d;
 import be.gerard.aoc.util.spatial.Direction;
-import be.gerard.aoc.util.vector.Vector;
+import be.gerard.aoc.util.geometry.Vector;
 
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package be.gerard.aoc2023.day23;
 
 import be.gerard.aoc.util.spatial.Direction;
-import be.gerard.aoc.util.vector.Vector;
-import be.gerard.aoc.util.vector.Vector2d;
+import be.gerard.aoc.util.geometry.Vector;
+import be.gerard.aoc.util.geometry.Vector2d;
 
 import java.util.List;
 

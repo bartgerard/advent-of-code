@@ -136,26 +136,26 @@ class LongRangeTest extends Specification {
         LongRange.of(0, 5) | 0L..5L        | ""
     }
 
-    def "all intersections"() {
+    def "all intervals"() {
         given:
         final List<LongRange> ranges = LongRange.parse(rangesAsStrings)
-        final List<LongRange> expectedIntersections = LongRange.parse(expectedIntersectionsAsStrings)
+        final List<LongRange> expectedIntervals = LongRange.parse(expectedIntervalsAsStrings)
 
         when:
-        final List<LongRange> allIntersections = LongRange.allIntersections(ranges)
+        final List<LongRange> intervals = LongRange.intervals(ranges)
 
         then:
-        assertThat(allIntersections).containsAnyElementsOf(expectedIntersections)
+        assertThat(intervals).containsAnyElementsOf(expectedIntervals)
 
         where:
-        rangesAsStrings           | expectedIntersectionsAsStrings | comment
-        []                        | []                             | ""
-        ["0"]                     | ["0"]                          | ""
-        ["0", "1"]                | ["0", "1"]                     | ""
-        ["0..10", "1"]            | ["0", "1", "2..10"]            | ""
-        ["0..10", "1..9"]         | ["0", "1..9", "10"]            | ""
-        ["0..10", "1..9", "2..8"] | ["0", "1", "2..8", "9", "10"]  | ""
-        ["0..10", "1..8", "2..9"] | ["0", "1", "2..8", "9", "10"]  | ""
+        rangesAsStrings           | expectedIntervalsAsStrings    | comment
+        []                        | []                            | ""
+        ["0"]                     | ["0"]                         | ""
+        ["0", "1"]                | ["0", "1"]                    | ""
+        ["0..10", "1"]            | ["0", "1", "2..10"]           | ""
+        ["0..10", "1..9"]         | ["0", "1..9", "10"]           | ""
+        ["0..10", "1..9", "2..8"] | ["0", "1", "2..8", "9", "10"] | ""
+        ["0..10", "1..8", "2..9"] | ["0", "1", "2..8", "9", "10"] | ""
     }
 
     def "all gaps"() {
@@ -207,5 +207,99 @@ class LongRangeTest extends Specification {
 
         ["0", "2"]                          | ["0", "2"]                    | ""
         ["0..10", "1..8", "2..9", "12..20"] | ["0..10", "12..20"]           | ""
+    }
+
+    def "subtract1"() {
+        given:
+        final LongRange minuend = LongRange.parse(minuendAsString)
+        final LongRange subtrahend = LongRange.parse(subtrahendAsString)
+        final List<LongRange> expectedDifference = LongRange.parse(expectedDifferenceAsStrings)
+
+        when:
+        final List<LongRange> difference = minuend.subtract(subtrahend)
+
+        then:
+        assertThat(difference).containsExactlyElementsOf(expectedDifference)
+
+        where:
+        minuendAsString | subtrahendAsString | expectedDifferenceAsStrings | comment
+        "0"             | "0"                | []                          | ""
+        "0"             | "1"                | ["0"]                       | ""
+        "1"             | "0"                | ["1"]                       | ""
+
+        "0..1"          | "0..1"             | []                          | ""
+        "0..1"          | "0"                | ["1"]                       | ""
+        "0..1"          | "1"                | ["0"]                       | ""
+
+        "0..2"          | "0..2"             | []                          | ""
+        "0..2"          | "0"                | ["1..2"]                    | ""
+        "0..2"          | "1"                | ["0", "2"]                  | ""
+        "0..2"          | "2"                | ["0..1"]                    | ""
+        "0..2"          | "0..1"             | ["2"]                       | ""
+        "0..2"          | "1..2"             | ["0"]                       | ""
+
+        "0..4"          | "0..4"             | []                          | ""
+        "0..4"          | "0"                | ["1..4"]                    | ""
+        "0..4"          | "1"                | ["0", "2..4"]               | ""
+        "0..4"          | "2"                | ["0..1", "3..4"]            | ""
+        "0..4"          | "3"                | ["0..2", "4"]               | ""
+        "0..4"          | "4"                | ["0..3"]                    | ""
+        "0..4"          | "0..1"             | ["2..4"]                    | ""
+        "0..4"          | "1..2"             | ["0", "3..4"]               | ""
+        "0..4"          | "2..3"             | ["0..1", "4"]               | ""
+        "0..4"          | "3..4"             | ["0..2"]                    | ""
+
+    }
+
+    def "subtract"() {
+        given:
+        final LongRange minuend = LongRange.parse(minuendAsString)
+        final List<LongRange> subtrahends = LongRange.parse(subtrahendsAsStrings)
+        final List<LongRange> expectedDifference = LongRange.parse(expectedDifferenceAsStrings)
+
+        when:
+        final List<LongRange> difference = minuend.subtract(subtrahends)
+
+        then:
+        assertThat(difference).containsExactlyElementsOf(expectedDifference)
+
+        where:
+        minuendAsString | subtrahendsAsStrings | expectedDifferenceAsStrings | comment
+        "0"             | ["0"]                | []                          | ""
+        "0"             | ["1"]                | ["0"]                       | ""
+        "1"             | ["0"]                | ["1"]                       | ""
+
+        "0..1"          | ["0..1"]             | []                          | ""
+        "0..1"          | ["0"]                | ["1"]                       | ""
+        "0..1"          | ["1"]                | ["0"]                       | ""
+
+        "0..2"          | ["0..2"]             | []                          | ""
+        "0..2"          | ["0"]                | ["1..2"]                    | ""
+        "0..2"          | ["1"]                | ["0", "2"]                  | ""
+        "0..2"          | ["2"]                | ["0..1"]                    | ""
+        "0..2"          | ["0..1"]             | ["2"]                       | ""
+        "0..2"          | ["1..2"]             | ["0"]                       | ""
+
+        "0..4"          | ["0..4"]             | []                          | ""
+        "0..4"          | ["0"]                | ["1..4"]                    | ""
+        "0..4"          | ["1"]                | ["0", "2..4"]               | ""
+        "0..4"          | ["2"]                | ["0..1", "3..4"]            | ""
+        "0..4"          | ["3"]                | ["0..2", "4"]               | ""
+        "0..4"          | ["4"]                | ["0..3"]                    | ""
+        "0..4"          | ["0..1"]             | ["2..4"]                    | ""
+        "0..4"          | ["1..2"]             | ["0", "3..4"]               | ""
+        "0..4"          | ["2..3"]             | ["0..1", "4"]               | ""
+        "0..4"          | ["3..4"]             | ["0..2"]                    | ""
+
+        "0..10"         | ["3..4", "7..8"]     | ["0..2", "5..6", "9..10"]   | ""
+        "0..10"         | ["3..5", "6..8"]     | ["0..2", "9..10"]           | ""
+        "0..10"         | ["3..6", "6..8"]     | ["0..2", "9..10"]           | ""
+        "0..10"         | ["3..7", "6..8"]     | ["0..2", "9..10"]           | ""
+
+        "0..10"         | ["0..4", "7..8"]     | ["5..6", "9..10"]           | ""
+        "0..10"         | ["3..4", "7..20"]    | ["0..2", "5..6"]            | ""
+        "0..10"         | ["-20..4", "7..20"]  | ["5..6"]                    | ""
+        "0..10"         | ["-20..5", "6..20"]  | []                          | ""
+
     }
 }

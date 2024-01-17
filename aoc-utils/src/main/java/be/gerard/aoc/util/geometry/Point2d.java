@@ -1,8 +1,6 @@
-package be.gerard.aoc.util.point;
+package be.gerard.aoc.util.geometry;
 
 import be.gerard.aoc.util.spatial.Direction;
-import be.gerard.aoc.util.vector.Vector;
-import be.gerard.aoc.util.vector.Vector2d;
 
 public record Point2d(
         int x,

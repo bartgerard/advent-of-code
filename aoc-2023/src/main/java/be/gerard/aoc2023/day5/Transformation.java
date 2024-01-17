@@ -42,7 +42,7 @@ public record Transformation(
             final Collection<Transformation> previousTransformations,
             final Collection<Transformation> nextTransformations
     ) {
-        final List<LongRange> intersections = Stream.concat(
+        final List<LongRange> usedIntervals = Stream.concat(
                         previousTransformations.stream()
                                 .map(Transformation::destinationRange),
                         nextTransformations.stream()
@@ -50,24 +50,24 @@ public record Transformation(
                 )
                 .collect(collectingAndThen(
                         toUnmodifiableList(),
-                        LongRange::usedIntersections
+                        LongRange::usedIntervals
                 ));
 
-        return intersections.stream()
-                .map(intersection -> {
+        return usedIntervals.stream()
+                .map(interval -> {
                     final long previousDifference = previousTransformations.stream()
-                            .filter(transformation -> intersection.overlaps(transformation.destinationRange()))
+                            .filter(transformation -> interval.overlaps(transformation.destinationRange()))
                             .map(Transformation::difference)
                             .findFirst()
                             .orElse(0L);
                     final long nextDifference = nextTransformations.stream()
-                            .filter(transformation -> intersection.overlaps(transformation.sourceRange()))
+                            .filter(transformation -> interval.overlaps(transformation.sourceRange()))
                             .map(Transformation::difference)
                             .findFirst()
                             .orElse(0L);
 
                     return new Transformation(
-                            intersection.plus(previousDifference),
+                            interval.plus(previousDifference),
                             previousDifference + nextDifference
                     );
                 })

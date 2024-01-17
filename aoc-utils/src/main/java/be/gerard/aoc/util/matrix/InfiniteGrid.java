@@ -1,9 +1,9 @@
 package be.gerard.aoc.util.matrix;
 
+import be.gerard.aoc.util.geometry.Line;
+import be.gerard.aoc.util.geometry.Point;
+import be.gerard.aoc.util.geometry.Point2d;
 import be.gerard.aoc.util.math.IntRange;
-import be.gerard.aoc.util.math.Line;
-import be.gerard.aoc.util.point.Point;
-import be.gerard.aoc.util.point.Point2d;
 import be.gerard.aoc.util.spatial.Direction;
 
 import java.util.Collection;
@@ -33,7 +33,7 @@ public record InfiniteGrid(
                         ),
                         toUnmodifiableSet()
                 ));
-        final List<IntRange> rowRegions = IntRange.allIntersections(linesByRange.keySet());
+        final List<IntRange> rowRegions = IntRange.intervals(linesByRange.keySet());
 
         return rowRegions.stream()
                 .mapToLong(region -> {
@@ -59,16 +59,16 @@ public record InfiniteGrid(
                         line.p2().x()
                 ))
                 .toList();
-        final List<IntRange> columnIntersections = IntRange.allIntersections(columnRanges);
+        final List<IntRange> columnIntervals = IntRange.intervals(columnRanges);
 
         Corners previousState = Corners.OUTSIDE;
         long volumeForOneRow = 0;
 
-        for (final IntRange columnIntersection : columnIntersections) {
-            final Point2d destination = Point.of(columnIntersection.toInclusive(), region.toInclusive());
+        for (final IntRange columnInterval : columnIntervals) {
+            final Point2d destination = Point.of(columnInterval.toInclusive(), region.toInclusive());
 
             final List<Direction> destinationDirections = linesWithinRegion.stream()
-                    .filter(line -> line.containsX(columnIntersection.toInclusive()))
+                    .filter(line -> line.containsX(columnInterval.toInclusive()))
                     .map(line -> line.directionsFrom(destination))
                     .flatMap(List::stream)
                     .toList();
@@ -78,7 +78,7 @@ public record InfiniteGrid(
                     : previousState.whenCrossing(destinationDirections);
 
             if (nextState.topLeft() == IN || nextState.bottomLeft() == IN) {
-                volumeForOneRow += columnIntersection.length();
+                volumeForOneRow += columnInterval.length();
             } else if (!nextState.isOutside()) {
                 volumeForOneRow += 1;
             }

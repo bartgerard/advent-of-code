@@ -1,12 +1,12 @@
 package be.gerard.aoc2023.day18;
 
 import be.gerard.aoc.util.input.Lines;
-import be.gerard.aoc.util.math.Line;
+import be.gerard.aoc.util.geometry.Line;
 import be.gerard.aoc.util.matrix.InfiniteGrid;
-import be.gerard.aoc.util.point.Point;
-import be.gerard.aoc.util.point.Point2d;
-import be.gerard.aoc.util.vector.Vector;
-import be.gerard.aoc.util.vector.Vector2d;
+import be.gerard.aoc.util.geometry.Point;
+import be.gerard.aoc.util.geometry.Point2d;
+import be.gerard.aoc.util.geometry.Vector;
+import be.gerard.aoc.util.geometry.Vector2d;
 
 import java.util.ArrayList;
 import java.util.List;

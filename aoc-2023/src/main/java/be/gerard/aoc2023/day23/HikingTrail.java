@@ -4,11 +4,11 @@ import be.gerard.aoc.util.collection.Maps;
 import be.gerard.aoc.util.input.Lines;
 import be.gerard.aoc.util.matrix.GenericMatrix;
 import be.gerard.aoc.util.matrix.Matrix;
-import be.gerard.aoc.util.point.Point;
-import be.gerard.aoc.util.point.Point2d;
+import be.gerard.aoc.util.geometry.Point;
+import be.gerard.aoc.util.geometry.Point2d;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -100,7 +100,7 @@ public record HikingTrail(
             final Intersection intersection,
             final List<Point2d> pointsOfInterest
     ) {
-        final Map<Point2d, Map<Point2d, Integer>> costByIntersection = new LinkedHashMap<>();
+        final Map<Point2d, Map<Point2d, Integer>> costByIntersection = new HashMap<>();
 
         generateGraph(
                 intersection,
